@@ -22,6 +22,7 @@ $factory->define(App\User::class, function (Faker\Generator $faker) {
         'role'           => 'seller',
         'active'           => true,
         'remember_token' => str_random(10),
+        'activation_token' => '',
     ];
 });
 
@@ -40,5 +41,11 @@ $factory->state(App\User::class, 'manager', function ($faker) {
 $factory->state(App\User::class, 'reseller', function ($faker) {
     return [
         'role' => 'reseller',
+    ];
+});
+
+$factory->state(App\User::class, 'seller', function ($faker) {
+    return [
+        'role' => 'seller',
     ];
 });

@@ -10,13 +10,17 @@ use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
 use Illuminate\Foundation\Auth\Access\Authorizable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Passport\HasApiTokens;
+use Illuminate\Database\Eloquent\SoftDeletes;
+
 
 class User extends Model implements
     AuthenticatableContract,
     AuthorizableContract,
     CanResetPasswordContract
 {
-    use Authenticatable, Authorizable, CanResetPassword, HasApiTokens, Notifiable;
+    use Authenticatable, Authorizable, CanResetPassword, HasApiTokens, Notifiable, SoftDeletes;
+
+    protected $dates = ['deleted_at'];
 
     /**
      * The attributes that are mass assignable.
@@ -24,7 +28,7 @@ class User extends Model implements
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 'password', 'active', 'activation_token'
     ];
 
     /**
@@ -55,12 +59,9 @@ class User extends Model implements
     \* ========================================================================= */
 
     /**
-     * User has many entries
+     * User has xxx
      */
-    public function entries()
-    {
-        return $this->hasMany(Entry::class);
-    }
+
 
 
     /* ========================================================================= *\
@@ -93,5 +94,25 @@ class User extends Model implements
     public function isManager()
     {
         return $this->role === 'manager';
+    }
+
+    /**
+     * Is user reseller
+     *
+     * @return bool
+     */
+    public function isReseller()
+    {
+        return $this->role === 'reseller';
+    }
+
+    /**
+     * Is user seller
+     *
+     * @return bool
+     */
+    public function isSeller()
+    {
+        return $this->role === 'seller';
     }
 }

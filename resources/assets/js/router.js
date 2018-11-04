@@ -38,7 +38,7 @@ const routes = [
 
 const router = new VueRouter({
   routes,
-  history: false,
+  history: true,
 })
 
 // Sync Vuex and vue-router;
@@ -52,7 +52,7 @@ router.beforeEach((to, from, next) => {
     // if route requires auth and user isn't authenticated
     next('/login')
   } else if (to.matched.some(record => record.meta.requiresAdmin) && (! store.state.auth.me ||
-      ! includes(['admin', 'manager'], store.state.auth.me.role))) {
+      ! includes(['admin', 'manager', 'reseller', 'seller'], store.state.auth.me.role))) {
     // if route required admin or manager role
     next('/login')
   } else {

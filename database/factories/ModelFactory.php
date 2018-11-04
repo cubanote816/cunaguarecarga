@@ -19,7 +19,8 @@ $factory->define(App\User::class, function (Faker\Generator $faker) {
         'name'           => $faker->name,
         'email'          => $faker->unique()->safeEmail,
         'password'       => $password ? : $password = bcrypt('123456'),
-        'role'           => 'user',
+        'role'           => 'seller',
+        'active'           => true,
         'remember_token' => str_random(10),
     ];
 });
@@ -36,16 +37,8 @@ $factory->state(App\User::class, 'manager', function ($faker) {
     ];
 });
 
-$factory->define(App\Entry::class, function (Faker\Generator $faker) {
-    $distance = $faker->numberBetween(2, 20);
-    $time     = round($distance * rand(4 * 60, 7 * 60));
-
+$factory->state(App\User::class, 'reseller', function ($faker) {
     return [
-        'user_id'  => 0,
-        'date'     => $faker->dateTimeBetween('-90 days', 'now')->format('Y-m-d'),
-        'distance' => $distance,
-        'time'     => seconds2time($time),
-        'speed'    => $distance / ($time / 3600),
-        'pace'     => ($time / 60) / $distance,
+        'role' => 'reseller',
     ];
 });

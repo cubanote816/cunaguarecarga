@@ -5,6 +5,7 @@ import auth from './modules/auth'
 import toast from './modules/toast'
 import users from './modules/users'
 import general from './modules/general'
+import order from './modules/order'
 
 Vue.use(Vuex)
 
@@ -18,5 +19,6 @@ export default new Vuex.Store({
     toast,
     users,
     general,
+    order,
   }
 })

@@ -14,7 +14,7 @@ const routes = [
   {path: '/register/activate/:id', component: require('./components/pages/auth/Confirmation.vue')},
   {path: '/register', component: require('./components/pages/auth/Register.vue'), meta: {requiresAuth: true}},
   {path: '/profile', component: require('./components/pages/auth/Profile.vue'), meta: {requiresAuth: true}},
-
+  {path: '/order', component: require('./components/pages/order/Order.vue'), meta: {requiresAuth: true}},
   {path: '/dashboard', component: require('./components/pages/dashboard/Dashboard.vue'), meta: {requiresAuth: true}},
 
 

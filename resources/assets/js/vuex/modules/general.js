@@ -51,6 +51,7 @@ const mutations = {
     'DELETE_USER',
     'FINISH_CONFIRMATION',
     'LOAD_NEW_MEMBER',
+    'ORDER',
   ], (state) => {
     state.loading = true
   }),
@@ -78,6 +79,8 @@ const mutations = {
     'LOAD_NEW_MEMBER_FAIL',
     'FINISH_CONFIRMATION_OK',
     'FINISH_CONFIRMATION_FAIL',
+    'ORDER_OK',
+    'ORDER_FAIL',
   ], (state) => {
     state.loading = false
   }),

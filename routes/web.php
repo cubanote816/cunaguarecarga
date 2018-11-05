@@ -11,6 +11,12 @@
 |
 */
 
-Route::get('/', function () {
+//Route::get('/', function () {
+//    return view('app');
+//});
+//Route::get('register/finish/{id}', 'AuthController@registerFinish');
+//Route::get('register/activate/{token}', 'AuthController@registerActivate');
+
+Route::get('{path}', function () {
     return view('app');
-});
+})->where('path', '(.*)');

@@ -21,8 +21,8 @@ Route::group(['prefix' => 'v1'], function () {
      */
 
     Route::post('auth/login', 'AuthController@login');
-    Route::post('auth/register', 'AuthController@register');
-
+    Route::put('register/finish/{id}', 'AuthController@registerFinish');
+    Route::get('register/activate/{token}', 'AuthController@registerActivate');
 
     /*
      * Authenticated area
@@ -30,16 +30,13 @@ Route::group(['prefix' => 'v1'], function () {
 
     Route::group(['middleware' => 'auth:api'], function () {
 
+        Route::post('auth/register', 'AuthController@register');
+
         Route::get('dashboard/data', 'DashboardController@data');
         Route::get('dashboard/admin-data', 'DashboardController@adminData');
 
         Route::get('user/me', 'UserController@me');
         Route::resource('user', 'UserController', ['except' => ['create', 'store', 'edit']]);
-
-        Route::get('entry/all', 'EntryController@all');
-        Route::resource('entry', 'EntryController', ['except' => ['create', 'edit']]);
-
-        Route::get('report/weekly', 'ReportController@weekly');
 
     });
 

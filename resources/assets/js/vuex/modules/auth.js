@@ -3,6 +3,7 @@ import * as Config from '../../config'
 
 const state = {
   me: null, // Logged in user
+  member: {}
 }
 
 const actions = {
@@ -78,7 +79,22 @@ const actions = {
         })
     })
   },
+  loadNewMember ({commit, dispatch}, id) {
+    commit('LOAD_NEW_MEMBER')
 
+    return new Promise((resolve, reject) => {
+      axios.get(Config.apiPath + 'register/activate/' + id)
+        .then(
+          response => {
+            commit('LOAD_NEW_MEMBER_OK', response.data.user)
+            resolve()
+          })
+        .catch(error => {
+          commit('LOAD_NEW_MEMBER_FAIL')
+          reject(error.response.data)
+        })
+    })
+  },
   updateProfile ({commit, dispatch}, {id, form}) {
     commit('UPDATE_PROFILE')
 
@@ -91,6 +107,22 @@ const actions = {
           })
         .catch(error => {
           commit('UPDATE_PROFILE_FAIL')
+          reject(error.response.data)
+        })
+    })
+  },
+  finishConfirmation ({commit, dispatch}, {id, form}) {
+    commit('FINISH_CONFIRMATION')
+
+    return new Promise((resolve, reject) => {
+      axios.post(Config.apiPath + 'register/finish' + id, {_method: 'PUT', ...form})
+        .then(
+          response => {
+            commit('FINISH_CONFIRMATION_OK', response.data.user)
+            resolve()
+          })
+        .catch(error => {
+          commit('FINISH_CONFIRMATION_FAIL')
           reject(error.response.data)
         })
     })
@@ -116,7 +148,15 @@ const mutations = {
     state.me = user
   },
 
+  LOAD_NEW_MEMBER_OK (state, user) {
+    state.member = user
+  },
+
   UPDATE_PROFILE_OK (state, user) {
+    state.me = user
+  },
+
+  FINISH_CONFIRMATION_OK (state, user) {
     state.me = user
   },
 

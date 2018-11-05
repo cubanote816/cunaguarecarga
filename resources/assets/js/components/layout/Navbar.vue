@@ -29,7 +29,7 @@
           <router-link tag="li" to="/#o" active-class="active"><a>Ordenar</a></router-link>
           <router-link tag="li" to="/#r" active-class="active"><a>Reportes</a></router-link>
           <router-link tag="li" to="/#v" active-class="active"><a>Vendedores</a></router-link>
-          <router-link tag="li" to="/#a" active-class="active"><a>Adicionar vendedor</a></router-link>
+          <router-link tag="li" to="/register" active-class="active"><a>Adicionar vendedor</a></router-link>
           <router-link v-if="me.role === 'admin' || me.role === 'manager'" tag="li" to="/admin" active-class="active">
             <a>Admin Panel</a></router-link>
 
@@ -49,7 +49,6 @@
         <ul class="nav navbar-nav navbar-right" v-else>
           <!-- Authentication Links -->
           <router-link tag="li" to="/login" active-class="active"><a>Login</a></router-link>
-          <router-link tag="li" to="/register" active-class="active"><a>Register</a></router-link>
         </ul>
 
       </div>

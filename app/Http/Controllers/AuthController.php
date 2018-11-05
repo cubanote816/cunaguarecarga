@@ -6,8 +6,11 @@ use App\User;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
+use App\Http\Requests\ConfirmationMember;
+use App\Http\Requests\Register;
 use Lang;
 use Validator;
+use App\Notifications\RegisterActivate;
 
 /**
  * Class AuthController
@@ -24,7 +27,7 @@ class AuthController extends Controller
      *
      * Handle a login request to the application.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Contracts\Auth\Authenticatable|array
      */
     public function login(Request $request)
@@ -66,42 +69,102 @@ class AuthController extends Controller
      * @param  \Illuminate\Http\Request $request
      * @return array
      */
-    public function register(Request $request)
+    public function register(Register $request)
     {
-        $this->validator($request->all())->validate();
+        //$this->validator($request->all())->validate();
+        $me = $request->user()->id;
+        event(new Registered($user = $this->create($me, $request->except('agreement'))));
+$contract = new Contract;
+        $contract->contractor = $request->user()->id;
+        $contract->user_id = $request->user()->id;
+        $contract->hired = $user->id;
+        $contract->status = 1;
+        $contract->agreement = $request->agreement;
 
-        event(new Registered($user = $this->create($request->all())));
+        $contract->save();
+        return ['user' => $user, 'access_token' => $user->makeApiToken(), 'all' => $request->all()];
+    }
 
-        return ['user' => $user, 'access_token' => $user->makeApiToken()];
+    protected function getRole($me)
+    {
+        $user = User::where('id', $me)->first();
+        switch ($user->role) {
+            case 'admin':
+                {
+                    $role = 'manager';
+                    break;
+                }
+            case 'manager':
+                {
+                    $role = 'reseller';
+                    break;
+                }
+            case 'reseller':
+                {
+                    $role = 'seller';
+                    break;
+                }
+        }
+        return $role;
+    }
+
+    public function registerActivate($token)
+    {
+        $user = User::where('id', '==', '$token')->first();
+        // if (!$user) {
+        //     return response()->json(['message' => 'El token de activación es inválido '.$token], 404);
+        // }
+
+        return ['user' => $user];
+    }
+
+    public function registerFinish(ConfirmationMember $request, $id)
+    {
+        $user = User::where('id', $id)->first();
+
+        $user->active = true;
+        $user->activation_token = '';
+        $user->name = $request->get('name');
+        $user->password = bcrypt($request->get('password'));
+        $user->save();
+        // redirect to login page
+//        return redirect('register/finish'.$user->id );
+        return ['user' => $user];
+
+
     }
 
     /**
      * Get a validator for an incoming registration request.
      *
-     * @param  array  $data
+     * @param  array $data
      * @return \Illuminate\Contracts\Validation\Validator
      */
-    protected function validator(array $data)
-    {
-        return Validator::make($data, [
-            'name' => 'required|max:255',
-            'email' => 'required|email|max:255|unique:users',
-            'password' => 'required|min:6|confirmed',
-        ]);
-    }
+//    protected function validator(array $data)
+//    {
+//        return Validator::make($data, [
+//            'email' => 'required|email|max:255|unique:users',
+//            'agreement' => 'required|min:2',
+//        ]);
+//    }
 
     /**
      * Create a new user instance after a valid registration.
      *
-     * @param  array  $data
+     * @param  array $data
      * @return User
      */
-    protected function create(array $data)
+    protected function create($id, array $data)
     {
-        return User::create([
-            'name' => $data['name'],
+        $new_user = User::create([
+            'name' => '',
             'email' => $data['email'],
-            'password' => bcrypt($data['password']),
+            'role' => $this->getRole($id),
+            'password' => bcrypt('cunagua'),
+            'activation_token' => str_random(60),
         ]);
+
+        $new_user->notify(new RegisterActivate($new_user));
+        return $new_user;
     }
 }

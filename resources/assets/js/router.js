@@ -11,7 +11,8 @@ const routes = [
 
   {path: '/login', component: require('./components/pages/auth/Login.vue')},
   {path: '/logout', component: require('./components/pages/auth/Logout.vue')},
-  {path: '/register', component: require('./components/pages/auth/Register.vue')},
+  {path: '/register/activate/:id', component: require('./components/pages/auth/Confirmation.vue')},
+  {path: '/register', component: require('./components/pages/auth/Register.vue'), meta: {requiresAuth: true}},
   {path: '/profile', component: require('./components/pages/auth/Profile.vue'), meta: {requiresAuth: true}},
 
   {path: '/dashboard', component: require('./components/pages/dashboard/Dashboard.vue'), meta: {requiresAuth: true}},
@@ -38,7 +39,7 @@ const routes = [
 
 const router = new VueRouter({
   routes,
-  history: true,
+  mode: 'history',
 })
 
 // Sync Vuex and vue-router;

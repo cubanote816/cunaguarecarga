@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Traits\Member;
 use Illuminate\Auth\Authenticatable;
 use Illuminate\Auth\Passwords\CanResetPassword;
 use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
@@ -18,7 +19,7 @@ class User extends Model implements
     AuthorizableContract,
     CanResetPasswordContract
 {
-    use Authenticatable, Authorizable, CanResetPassword, HasApiTokens, Notifiable, SoftDeletes;
+    use Authenticatable, Authorizable, CanResetPassword, HasApiTokens, Notifiable, SoftDeletes, Member;
 
     protected $dates = ['deleted_at'];
 
@@ -59,10 +60,44 @@ class User extends Model implements
     \* ========================================================================= */
 
     /**
-     * User has xxx
+     * Owner has many Member
      */
+public function owner()
+    {
+        return $this->belongsToMany(User::class, 'groups', 'owner', 'member');
+    }
 
+	/**
+     * Member has one Owner
+     */
+    public function member()
+    {
+        return $this->belongsToMany(User::class, 'groups', 'member', 'owner');
+    }
 
+	/**
+     * Hired has one Contractor
+     */
+	public function hired()
+    {
+        return $this->belongsToMany(User::class, 'contracts', 'contractor', 'hired');
+    }
+
+	/**
+     * contractor has many Hired
+     */
+    public function contractor()
+    {
+        return $this->belongsToMany(User::class, 'contracts', 'hired', 'contractor');
+    }
+
+	/**
+     * Usear has many Contract
+     */
+    public function contracts()
+    {
+        return $this->hasMany(Contract::class);
+    }
 
     /* ========================================================================= *\
      * Helpers

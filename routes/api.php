@@ -39,6 +39,8 @@ Route::group(['prefix' => 'v1'], function () {
         Route::resource('user', 'UserController', ['except' => ['create', 'store', 'edit']]);
 
         Route::post('order', 'OrderController@setOrder');
+
+        Route::get('sellers', 'ContractController@getSellers');
     });
 
 });

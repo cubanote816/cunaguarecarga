@@ -16,6 +16,7 @@ const routes = [
   {path: '/profile', component: require('./components/pages/auth/Profile.vue'), meta: {requiresAuth: true}},
   {path: '/order', component: require('./components/pages/order/Order.vue'), meta: {requiresAuth: true}},
   {path: '/dashboard', component: require('./components/pages/dashboard/Dashboard.vue'), meta: {requiresAuth: true}},
+  {path: '/seller', component: require('./components/pages/seller/Seller.vue'), meta: {requiresAuth: true}},
 
 
   {

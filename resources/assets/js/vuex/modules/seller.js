@@ -2,10 +2,7 @@ import axios from 'axios'
 import * as Config from '../../config'
 
 const state = {
-  sellers: {
-    current_page: 1,
-    data: [],
-  },
+  sellers: {},
   seller_detail: {
     current_page: 1,
     data: [],
@@ -15,17 +12,17 @@ const state = {
 const actions = {
 
   getSellers ({commit, dispatch}) {
-    commit('SELLERS')
+    commit('SELLER')
 
     return new Promise((resolve, reject) => {
-      axios.get(Config.apiPath + 'sellers')
+      axios.get(Config.apiPath + 'getsellers')
         .then(
           response => {
-            commit('SELLERS_OK', response.data.sellers)
+            commit('SELLER_OK', response.data.sellers)
             resolve()
           })
         .catch(error => {
-          commit('SELLERS_FAIL')
+          commit('SELLER_FAIL')
           reject(error.response.data)
         })
     })
@@ -51,8 +48,8 @@ const actions = {
 
 const mutations = {
 
-  SELLERS_OK (state, seller) {
-    state.sellers = seller
+  SELLER_OK (state, sellers) {
+    state.sellers = sellers
   },
 
   SELLERDETAIL_OK (state, sellerDetail) {

@@ -54,6 +54,9 @@ const mutations = {
     'ORDER',
     'CONTRACTOR',
     'CONTRACTS',
+    'LOAD_SELLERS',
+    'SELLER',
+    'SELLERDETAIL',
   ], (state) => {
     state.loading = true
   }),
@@ -87,6 +90,12 @@ const mutations = {
     'CONTRACTOR_FAIL',
     'CONTRACTS_OK',
     'CONTRACTS_FAIL',
+    'LOAD_SELLERS_OK',
+    'LOAD_SELLERS_FAIL',
+    'SELLER_OK',
+    'SELLER_FAIL',
+    'SELLERDETAIL_OK',
+    'SELLERDETAIL_FAIL',
   ], (state) => {
     state.loading = false
   }),

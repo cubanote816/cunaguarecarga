@@ -1,7 +1,8 @@
 <?php
 
 use Illuminate\Http\Request;
-
+use App\Http\Resources\ContractsCollection;
+use App\Sale;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -19,7 +20,20 @@ Route::group(['prefix' => 'v1'], function () {
     /*
      * Guest area
      */
+     Route::get('json', function () {
 
+
+
+       // $hired_list = App\Contract::with('hired')->where('contractor', 2)->get();
+       $seller_detail = (new Sale)
+           ->where('sold_by',2)
+           ->orderBy('created_at', 'desc')
+           ->orderBy('type', 'desc')->paginate();
+
+
+       return ['contracts' => $seller_detail];
+
+     });
     Route::post('auth/login', 'AuthController@login');
     Route::put('register/finish/{id}', 'AuthController@registerFinish');
     Route::get('register/activate/{token}', 'AuthController@registerActivate');
@@ -40,7 +54,7 @@ Route::group(['prefix' => 'v1'], function () {
 
         Route::post('order', 'OrderController@setOrder');
 
-        Route::get('sellers', 'SellersController@getSeller');
+        Route::get('sellers', 'SellersController@getSellers');
 
         Route::get('contracts', 'ContractController@getContracts');
         Route::get('contractor', 'ContractController@getContractor');

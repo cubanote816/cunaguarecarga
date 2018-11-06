@@ -17,6 +17,7 @@ const routes = [
   {path: '/order', component: require('./components/pages/order/Order.vue'), meta: {requiresAuth: true}},
   {path: '/dashboard', component: require('./components/pages/dashboard/Dashboard.vue'), meta: {requiresAuth: true}},
   {path: '/seller', component: require('./components/pages/seller/Seller.vue'), meta: {requiresAuth: true}},
+  {path: '/seller/detail/:id', component: require('./components/pages/seller/SellerDetail.vue'), meta: {requiresAuth: true}},
   {path: '/reports', component: require('./components/pages/reports/Reports.vue'), meta: {requiresAuth: true}},
 
 

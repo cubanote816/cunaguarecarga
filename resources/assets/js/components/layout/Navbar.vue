@@ -36,7 +36,6 @@
 
           <router-link v-if="me.role == 'reseller'" tag="li" to="/seller" active-class="active">
             <a>Vendedores</a></router-link>
-          <router-link tag="li" to="/register" active-class="active"><a>Adicionar vendedor</a></router-link>
           <router-link v-if="me.role === 'admin' || me.role === 'manager'" tag="li" to="/admin" active-class="active">
             <a>Admin Panel</a></router-link>
 

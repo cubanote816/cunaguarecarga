@@ -6,7 +6,7 @@ import toast from './modules/toast'
 import users from './modules/users'
 import general from './modules/general'
 import order from './modules/order'
-import seller from './modules/sellers'
+import seller from './modules/seller'
 import contract from './modules/contract'
 
 Vue.use(Vuex)

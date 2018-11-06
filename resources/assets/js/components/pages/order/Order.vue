@@ -4,8 +4,7 @@
         <hr>
         <div class="row">
             <form class="form-horizontal row" role="form" @submit.prevent="calc">
-                <div>Credito: {{balance}}</div>
-                <div>Costo: {{price}}</div>
+                <div>Costo: {{price}} </div>
                 <div class="col-xs-12">
                     <div class="col-xs-5">
                         <div class="form-group" :class="{ 'has-error': errors.cant }">
@@ -91,17 +90,16 @@
         errors: {}
       }
     },
+
     mounted () {
-      // this.managerUser()
       this.balance = 1000
+      this.getContractor()
       this.price = this.contractor.agreement
       this.subtotal = 0.00
-      this.getContractor()
     },
     computed: {
       ...mapState({
         me: state => state.auth.me,
-        // userManager: state => state.users.userManager,
         contractor: state => state.contract.contractor,
       })
     },
@@ -114,17 +112,11 @@
         'addToastMessage',
       ]),
       remove (index) { // TODO
-        // this.balance = this.balance + index.
         this.items.splice(index, 1) // why is this removing only the last row?
       },
       calc () {
-        // if (cant) {
-        // this.subtotal = this.price * this.form.cant + this.subtotal
-        // this.cost = this.price * this.form.cant
-        // this.balance = this.balance - this.cost
         this.form.cost = (this.price / 2) * this.form.credit
         this.subtotal = this.form.cost + this.subtotal
-        this.balance = this.balance - this.subtotal
         switch (this.form.credit) {
           case '1.5': {
             this.form.credit = '15'
@@ -146,16 +138,12 @@
         this.items.push({ credit: this.form.credit, phone: this.form.phone, cost: this.form.cost }) // what to push unto the rows array?
         this.form.credit = ''
         this.form.phone = ''
-        // } else {
-        //   this.
-        // }
       },
       save (items) {
         this.errors = {}
         this.setOrder(items)
           .then(() => {
-            this.items = ''
-            this.subtotal = '0.00'
+            this.$router.replace('/reports')
             this.addToastMessage({
               text: 'Operacion satisfactoria',
               type: 'success'

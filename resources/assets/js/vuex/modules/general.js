@@ -52,6 +52,8 @@ const mutations = {
     'FINISH_CONFIRMATION',
     'LOAD_NEW_MEMBER',
     'ORDER',
+    'CONTRACTOR',
+    'CONTRACTS',
   ], (state) => {
     state.loading = true
   }),
@@ -81,6 +83,10 @@ const mutations = {
     'FINISH_CONFIRMATION_FAIL',
     'ORDER_OK',
     'ORDER_FAIL',
+    'CONTRACTOR_OK',
+    'CONTRACTOR_FAIL',
+    'CONTRACTS_OK',
+    'CONTRACTS_FAIL',
   ], (state) => {
     state.loading = false
   }),

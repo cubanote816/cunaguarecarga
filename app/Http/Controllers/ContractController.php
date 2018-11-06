@@ -3,7 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Contract;
+use App\User;
 use Illuminate\Http\Request;
+use App\Http\Resources\Contracts as ContractsResource;
+use App\Http\Resources\ContractsCollection;
+
 
 class ContractController extends Controller
 {
@@ -12,74 +16,28 @@ class ContractController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function getContracts(Request $request)
     {
-        //
+        $hired_list = Contract::with('hired')->where('contractor', $request->user()->id)->get();
+
+        $contractor = User::with('contractor')->where('id', $request->user()->id)->get();
+
+
+        return ['contracts' => $hired_list, 'contractor' => $contractor];
     }
 
+
     /**
-     * Show the form for creating a new resource.
+     * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function getContractor(Request $request)
     {
-        //
+        $list = Contract::with('contractor')->where('hired', $request->user()->id)->first();
+
+
+        return ['contractor' => $list];
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Contract  $contract
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Contract $contract)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Contract  $contract
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Contract $contract)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Contract  $contract
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Contract $contract)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Contract  $contract
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Contract $contract)
-    {
-        //
-    }
 }

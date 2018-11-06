@@ -3,15 +3,19 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\User;
+use App\Contract;
+use App\Http\Resources\SellersCollection;
 
 class SellersController extends Controller
 {
   public function getSeller(Request $request)
   {
-      $contracted_list = User::with('owner')->where('id', $request->user()->id)->get();
-      //$lists= new SellersCollection($contracted_list);
+      $contracted_list = User::with('owner')->where('id', $request->user()->id);
+      $lists= new SellersCollection($contracted_list);
+      $hired_list = Contract::with('hired')->where('contractor', $request->user()->id)->get();
 
-      return ['sellers' => $contracted_list];
+      return ['sellers' => $hired_list];
   }
 
 

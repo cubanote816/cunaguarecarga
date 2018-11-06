@@ -13,7 +13,7 @@ class OrderController extends Controller
   /**
    * @param Request $request
    */
-  public function setOrder(OrderRequest $request)
+  public function setOrder(Request $request)
   {
 
       // Submitted orders

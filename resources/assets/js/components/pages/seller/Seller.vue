@@ -21,7 +21,7 @@
                 <div class="col-xs-2">{{saller.email}}</div>
                 <div class="col-xs-2">{{saller.agreement}}</div>
                 <div class="col-xs-4">
-                <router-link :to="'/seller/deatil/' + seller.id">Ver Detalles</router-link>
+                <router-link :to="'/seller/detail/' + seller.id">Ver Detalles</router-link>
 </div>
             </div>
         </div>

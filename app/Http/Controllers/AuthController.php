@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\User;
+use App\Contract;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
@@ -74,14 +75,18 @@ class AuthController extends Controller
         //$this->validator($request->all())->validate();
         $me = $request->user()->id;
         event(new Registered($user = $this->create($me, $request->except('agreement'))));
-$contract = new Contract;
+
+        $contract = new Contract;
         $contract->contractor = $request->user()->id;
         $contract->user_id = $request->user()->id;
         $contract->hired = $user->id;
-        $contract->status = 1;
+        $contract->status = 0;
         $contract->agreement = $request->agreement;
 
         $contract->save();
+
+        $user->notify(new RegisterActivate($user));
+
         return ['user' => $user, 'access_token' => $user->makeApiToken(), 'all' => $request->all()];
     }
 
@@ -110,12 +115,12 @@ $contract = new Contract;
 
     public function registerActivate($token)
     {
-        $user = User::where('id', '==', '$token')->first();
+        $user = User::where('activation_token', 'gHelzGsr072AYjaC45sQENRLatWWvAwv5gM56p3MBEIeMXoJmEjabL62erW3')->first();
         // if (!$user) {
         //     return response()->json(['message' => 'El token de activación es inválido '.$token], 404);
         // }
 
-        return ['user' => $user];
+        return ['user' => $user, 'token'=> $token];
     }
 
     public function registerFinish(ConfirmationMember $request, $id)
@@ -157,14 +162,13 @@ $contract = new Contract;
     protected function create($id, array $data)
     {
         $new_user = User::create([
-            'name' => '',
+            'name' => $this->getRole($id),
             'email' => $data['email'],
-            'role' => $this->getRole($id),
+            'role' => 'admin',
             'password' => bcrypt('cunagua'),
             'activation_token' => str_random(60),
         ]);
 
-        $new_user->notify(new RegisterActivate($new_user));
         return $new_user;
     }
 }

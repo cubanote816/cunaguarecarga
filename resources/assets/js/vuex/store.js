@@ -6,6 +6,8 @@ import toast from './modules/toast'
 import users from './modules/users'
 import general from './modules/general'
 import order from './modules/order'
+import seller from './modules/sellers'
+import contract from './modules/contract'
 
 Vue.use(Vuex)
 
@@ -20,5 +22,7 @@ export default new Vuex.Store({
     users,
     general,
     order,
+    seller,
+    contract,
   }
 })

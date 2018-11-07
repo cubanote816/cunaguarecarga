@@ -24,13 +24,49 @@
                 <label for="agreement" class="col-md-4 control-label">Agreement</label>
 
                 <div class="col-md-6">
-                  <input id="agreement" type="input" class="form-control" v-model="form.agreement" required>
+                  <input id="agreement" type="numeric" class="form-control" v-model="form.agreement" required>
                   <div class="help-block" v-if="errors.agreement">
                     <div v-for="error in errors.agreement"><strong>{{ error }}</strong></div>
                   </div>
                 </div>
               </div>
+              <div class="form-group" :class="{ 'has-error': errors.role }" v-if="me.role == 'admin'">
+                              <label for="role" class="col-md-4 control-label">Role</label>
+                              <div class="col-md-6">
+                                <select id="role" class="form-control" v-model="form.role">
+                                  <option value="manager">Administrador</option>
+                                  <option value="seller">Vendedor</option>
+                                </select>
+                                <div class="help-block" v-if="errors.role">
+                                  <div v-for="error in errors.role"><strong>{{ error }}</strong></div>
+                                </div>
+                              </div>
+                            </div>
 
+                            <div class="form-group" :class="{ 'has-error': errors.role }" v-if="me.role == 'manager'">
+                              <label for="role" class="col-md-4 control-label">Role</label>
+                              <div class="col-md-6">
+                                <select id="role" class="form-control" v-model="form.role">
+                                  <option value="reseller">Revendedor</option>
+                                  <option value="seller">Vendedor</option>
+                                </select>
+                                <div class="help-block" v-if="errors.role">
+                                  <div v-for="error in errors.role"><strong>{{ error }}</strong></div>
+                                </div>
+                              </div>
+                            </div>
+
+                            <div class="form-group" :class="{ 'has-error': errors.role }" v-if="me.role == 'seller'">
+                              <label for="role" class="col-md-4 control-label">Role</label>
+                              <div class="col-md-6">
+                                <select id="role" class="form-control" v-model="form.role">
+                                  <option value="seller">Vendedor</option>
+                                </select>
+                                <div class="help-block" v-if="errors.role">
+                                  <div v-for="error in errors.role"><strong>{{ error }}</strong></div>
+                                </div>
+                              </div>
+                            </div>
               <div class="form-group">
                 <div class="col-md-6 col-md-offset-4">
                   <button type="submit" class="btn btn-primary">
@@ -47,7 +83,7 @@
 </template>
 
 <script>
-  import { mapActions } from 'vuex'
+  import { mapActions, mapState } from 'vuex'
 
   export default {
 
@@ -56,11 +92,16 @@
         form: {
           email: '',
           agreement: '',
+          role: '',
         },
         errors: {}
       }
     },
-
+    computed: {
+      ...mapState({
+        me: state => state.auth.me,
+      })
+    },
     methods: {
 
       ...mapActions([

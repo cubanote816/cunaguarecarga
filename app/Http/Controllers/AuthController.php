@@ -8,7 +8,7 @@ use Illuminate\Auth\Events\Registered;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use App\Http\Requests\ConfirmationMember;
-use App\Http\Requests\Register;
+use App\Http\Requests\RegisterRequest;
 use Lang;
 use Validator;
 use App\Notifications\RegisterActivate;
@@ -70,7 +70,7 @@ class AuthController extends Controller
      * @param  \Illuminate\Http\Request $request
      * @return array
      */
-    public function register(Register $request)
+    public function register(RegisterRequest $request)
     {
         //$this->validator($request->all())->validate();
         $me = $request->user()->id;
@@ -162,9 +162,9 @@ class AuthController extends Controller
     protected function create($id, array $data)
     {
         $new_user = User::create([
-            'name' => $this->getRole($id),
+            'name' => '',
             'email' => $data['email'],
-            'role' => 'admin',
+            'role' => $data['role'],
             'password' => bcrypt('cunagua'),
             'activation_token' => str_random(60),
         ]);

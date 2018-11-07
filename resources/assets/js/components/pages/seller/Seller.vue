@@ -3,7 +3,7 @@
         <h3>Revendedores</h3>
         <div class="row">
             <div class="col-xs-12">
-            <router-link :to="/register">Addicionar vendedor</router-link>
+            <router-link :to="'/register'" active-class="active"><a class="btn btn-primary">Addicionar vendedor</a></router-link>
             <router-link :to="'/seller/detail/2'">Detalles</router-link>
 
             </div>

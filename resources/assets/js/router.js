@@ -9,6 +9,7 @@ Vue.use(VueRouter)
 const routes = [
 
   {path: '/', component: require('./components/pages/auth/Login.vue')},
+  {path: '/login', component: require('./components/pages/auth/Login.vue')},
   {path: '/logout', component: require('./components/pages/auth/Logout.vue')},
   {path: '/register/activate/:id', component: require('./components/pages/auth/Confirmation.vue')},
   {path: '/register', component: require('./components/pages/auth/Register.vue'), meta: {requiresAuth: true}},

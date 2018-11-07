@@ -28,16 +28,7 @@
           <router-link tag="li" to="/dashboard" active-class="active"><a>Dashboad</a></router-link>
           <router-link tag="li" to="/order" active-class="active"><a>Ordenar</a></router-link>
           <router-link tag="li" to="/reports" active-class="active"><a>Reportes</a></router-link>
-          <router-link v-if="me.role == 'admin'" tag="li" to="/seller" active-class="active">
-            <a>Administradores</a></router-link>
-
-          <router-link v-if="me.role == 'manager'" tag="li" to="/seller" active-class="active">
-            <a>Revendedores</a></router-link>
-
-          <router-link v-if="me.role == 'reseller'" tag="li" to="/seller" active-class="active">
-            <a>Vendedores</a></router-link>
-          <router-link v-if="me.role === 'admin' || me.role === 'manager'" tag="li" to="/admin" active-class="active">
-            <a>Admin Panel</a></router-link>
+          <router-link tag="li" to="/seller" active-class="active"><a>Vendedores</a></router-link>
 
           <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">

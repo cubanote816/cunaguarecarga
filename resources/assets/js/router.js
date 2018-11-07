@@ -7,9 +7,8 @@ import includes from 'lodash-es/includes'
 Vue.use(VueRouter)
 
 const routes = [
-  {path: '/', component: require('./components/pages/front/Front.vue')},
 
-  {path: '/login', component: require('./components/pages/auth/Login.vue')},
+  {path: '/', component: require('./components/pages/auth/Login.vue')},
   {path: '/logout', component: require('./components/pages/auth/Logout.vue')},
   {path: '/register/activate/:id', component: require('./components/pages/auth/Confirmation.vue')},
   {path: '/register', component: require('./components/pages/auth/Register.vue'), meta: {requiresAuth: true}},

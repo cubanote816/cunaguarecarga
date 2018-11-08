@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <h3>Registration {{member.email}} ok</h3>
+    <h3>Finalizar registro</h3>
     <hr>
 
     <form class="form-horizontal" role="form" @submit.prevent="onSubmit">
@@ -11,16 +11,6 @@
           <input id="name" type="text" class="form-control" v-model="form.name" required autofocus>
           <div class="help-block" v-if="errors.name">
             <div v-for="error in errors.name"><strong>{{ error }}</strong></div>
-          </div>
-        </div>
-      </div>
-
-      <div class="form-group" :class="{ 'has-error': errors.email }">
-        <label for="email" class="col-md-4 control-label">E-Mail Address {{member.email}} g</label>
-        <div class="col-md-6">
-          <input id="email" type="email" class="form-control" v-model="form.email" disabled>
-          <div class="help-block" v-if="errors.email">
-            <div v-for="error in errors.email"><strong>{{ error }}</strong></div>
           </div>
         </div>
       </div>
@@ -62,16 +52,16 @@
 
     data () {
       return {
+        test: '',
         form: {
           name: '',
-          email: '',
           password: '',
           password_confirmation: '',
-          agreement: '',
         },
         errors: {}
       }
     },
+
     computed: {
       ...mapState({
         member: state => state.auth.member,
@@ -83,7 +73,6 @@
     },
     mounted () {
       this.loadNewMember(this.activationToken)
-      this.form.email = this.member.email
     },
     methods: {
 
@@ -95,8 +84,9 @@
 
       onSubmit () {
         this.errors = {}
-        this.finishConfirmation(this.form)
+        this.finishConfirmation({id: this.activationToken, form: this.form})
           .then(() => {
+            this.$router.replace('/dashboard')
             this.addToastMessage({
               text: 'Su usuario ha sido activado!',
               type: 'success'

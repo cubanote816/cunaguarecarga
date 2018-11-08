@@ -74,7 +74,7 @@ class AuthController extends Controller
     {
         //$this->validator($request->all())->validate();
         $me = $request->user()->id;
-        event(new Registered($user = $this->create($me, $request->except('agreement'))));
+        $user = $this->create($me, $request->except('agreement'));
 
         $contract = new Contract;
         $contract->contractor = $request->user()->id;
@@ -87,35 +87,12 @@ class AuthController extends Controller
 
         $user->notify(new RegisterActivate($user));
 
-        return ['user' => $user, 'access_token' => $user->makeApiToken(), 'all' => $request->all()];
-    }
-
-    protected function getRole($me)
-    {
-        $user = User::where('id', $me)->first();
-        switch ($user->role) {
-            case 'admin':
-                {
-                    $role = 'manager';
-                    break;
-                }
-            case 'manager':
-                {
-                    $role = 'reseller';
-                    break;
-                }
-            case 'reseller':
-                {
-                    $role = 'seller';
-                    break;
-                }
-        }
-        return $role;
+        return ['user' => $user];
     }
 
     public function registerActivate($token)
     {
-        $user = User::where('activation_token', 'gHelzGsr072AYjaC45sQENRLatWWvAwv5gM56p3MBEIeMXoJmEjabL62erW3')->first();
+        $user = User::where('activation_token', $token)->first();
         // if (!$user) {
         //     return response()->json(['message' => 'El token de activación es inválido '.$token], 404);
         // }
@@ -125,18 +102,9 @@ class AuthController extends Controller
 
     public function registerFinish(ConfirmationMember $request, $id)
     {
-        $user = User::where('id', $id)->first();
+      event(new Registered($user = $this->update($id, $request->all())));
 
-        $user->active = true;
-        $user->activation_token = '';
-        $user->name = $request->get('name');
-        $user->password = bcrypt($request->get('password'));
-        $user->save();
-        // redirect to login page
-//        return redirect('register/finish'.$user->id );
-        return ['user' => $user];
-
-
+      return ['user' => $user, 'access_token' => $user->makeApiToken()];
     }
 
     /**
@@ -161,14 +129,36 @@ class AuthController extends Controller
      */
     protected function create($id, array $data)
     {
+        if ($data['role'])
+        $role = $data['role'] ;
+        else {
+          $role = 'seller';
+        }
         $new_user = User::create([
             'name' => '',
             'email' => $data['email'],
-            'role' => $data['role'],
+            'role' => $role,
             'password' => bcrypt('cunagua'),
             'activation_token' => str_random(60),
         ]);
 
         return $new_user;
     }
+
+    /**
+     * Finish a new user instance after a valid registration.
+     *
+     * @param  array $data
+     * @return User
+     */
+      private function update($id, array $data){
+        $user = User::where('activation_token', $id)->first();
+
+        $user->active = true;
+        $user->activation_token = '';
+        $user->name = $data['name'];
+        $user->password = bcrypt($data['password']);
+        $user->save();
+       return $user;
+      }
 }

@@ -28,7 +28,7 @@
           <router-link tag="li" to="/dashboard" active-class="active"><a>Dashboad</a></router-link>
           <router-link tag="li" to="/order" active-class="active"><a>Ordenar</a></router-link>
           <router-link tag="li" to="/reports" active-class="active"><a>Reportes</a></router-link>
-          <router-link tag="li" to="/seller" active-class="active"><a>Vendedores</a></router-link>
+          <router-link tag="li" v-if="me.role != 'seller'" to="/seller" active-class="active"><a>Vendedores</a></router-link>
 
           <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">

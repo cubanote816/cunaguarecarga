@@ -56,7 +56,7 @@
                               </div>
                             </div>
 
-                            <div class="form-group" :class="{ 'has-error': errors.role }" v-if="me.role == 'seller'">
+                            <div class="form-group" :class="{ 'has-error': errors.role }" v-if="me.role == 'reseller'">
                               <label for="role" class="col-md-4 control-label">Role</label>
                               <div class="col-md-6">
                                 <select id="role" class="form-control" v-model="form.role">
@@ -113,6 +113,9 @@
         this.errors = {}
         this.register(this.form)
           .then(() => {
+            this.form.email = ''
+            this.form.agreement = ''
+            this.form.role = ''
             this.addToastMessage({
               text: 'El vendedor fue creado, se le ha enviado un correo a ' + this.form.email + ' para su activacion!',
               type: 'success'

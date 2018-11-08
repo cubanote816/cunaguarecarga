@@ -67,9 +67,6 @@ const actions = {
       axios.post(Config.apiPath + 'auth/register', form)
         .then(
           response => {
-            const accessToken = response.data.access_token
-            localStorage.setItem('access_token', accessToken)
-
             commit('REGISTER_OK', response.data.user)
             resolve()
           })
@@ -115,9 +112,11 @@ const actions = {
     commit('FINISH_CONFIRMATION')
 
     return new Promise((resolve, reject) => {
-      axios.post(Config.apiPath + 'register/finish' + id, {_method: 'PUT', ...form})
+      axios.post(Config.apiPath + 'register/finish/' + id, {_method: 'PUT', ...form})
         .then(
           response => {
+            const accessToken = response.data.access_token
+            localStorage.setItem('access_token', accessToken)
             commit('FINISH_CONFIRMATION_OK', response.data.user)
             resolve()
           })

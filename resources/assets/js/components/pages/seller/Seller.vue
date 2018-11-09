@@ -9,7 +9,12 @@
             </div>
         </div>
         <hr>
-        <div class="row">
+        <div class="row marginbot10">
+          <div class="col-sm-6 text-right">
+            <span class="page-info">Page {{ sellers.sellers.current_page }} of {{ sellers.sellers.last_page }}</span>
+          </div>
+        </div>
+
             <div class="panel panel-default">
                 <div class="table table-bordered row">
                     <div class="col-xs-12">
@@ -19,16 +24,22 @@
                         <div class="col-xs-1">Acuerdo</div>
                         <div class="col-xs-1"></div>
                     </div>
-                    <div class="col-xs-12" v-for="seller in sellers.sellers">
+                    <div class="col-xs-12" v-for="seller in sellers.sellers.data">
                         <div class="col-xs-4">{{seller.hired.name}}</div>
                         <div class="col-xs-5">{{seller.hired.email}}</div>
+                        <div class="col-xs-1">{{(seller.hired.active == 1) ? 'Activado' : 'Desactivado'}}</div>
                         <div class="col-xs-1">{{seller.agreement}}</div>
-                        <div class="col-xs-1">Ver detalles</div>
                         <div class="col-xs-1"></div>
                     </div>
                 </div>
             </div>
-        </div>
+            <div class="text-right" v-if="sellers.sellers.last_page > 1">
+              <ul class="pagination marginpulltop15">
+                <li v-for="page in range(1, sellers.sellers.last_page)" :key="page" :class="{active: page == sellers.sellers.current_page}">
+                  <a href="#" @click.prevent="onLoadSellers(page)">{{ page }}</a>
+                </li>
+              </ul>
+            </div>
     </div>
 </template>
 
@@ -39,8 +50,7 @@ export default {
 
   data () {
     return {
-      dateFrom: null,
-      dateTo: null
+      search: '',
     }
   },
 
@@ -53,14 +63,13 @@ export default {
       me: state => state.auth.me,
       sellers: state => state.seller.sellers,
     }),
-
     params () {
       return {
         page: this.sellers.current_page,
-        dateFrom: this.dateFrom,
-        dateTo: this.dateTo,
+        query: this.search,
       }
-    },
+    }
+
   },
 
   methods: {
@@ -68,18 +77,12 @@ export default {
       'sellersList',
     ]),
 
-    onLoadReport (page) {
+    onLoadSellers (page) {
       this.sellersList({...this.params, page})
     },
 
-    onFilter () {
+    onSearch () {
       this.sellersList({...this.params, page: 1})
-    },
-
-    onFilterClear () {
-      this.dateFrom = null
-      this.dateTo = null
-      this.sellersList(this.params)
     },
   }
 }

@@ -11,9 +11,16 @@ class SellersController extends Controller
 {
   public function getSellers(Request $request)
   {
-      $hired_list = Contract::with('hired')->where('contractor', $request->user()->id)->get();
+      $hired_list = Contract::with('hired')
+      ->where('contractor', $request->user()->id)
+      ->latest();
 
-      return ['sellers' => $hired_list];
+      // if ($request->get('query')) {
+      //     $hired_list->where('name', 'like', '%' . $request->get('query') . '%')
+      //         ->orWhere('email', 'like', '%' . $request->get('query') . '%');
+      // }
+
+      return ['sellers' => $hired_list->paginate()];
   }
 
   public function getSellerDetail(Request $request)

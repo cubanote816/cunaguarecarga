@@ -20,6 +20,6 @@ class ReportController extends Controller
         ->filter($request->only('dateFrom', 'dateTo'))->sum('cost');
 
 
-        return ['reports' => $reports->paginate(), 'total' => $to_pay];
+        return ['reports' => $reports->paginate(), 'total_pay' => $to_pay];
       }
 }

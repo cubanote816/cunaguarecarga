@@ -27,7 +27,7 @@
                 </div>
             </div>
             <div class="col-sm-6 text-right">
-                <span class="page-info">Page {{ seller_detail.current_page }} of  {{ seller_detail.last_page }}</span>
+                <span class="page-info">Page {{ seller_detail.seller_detail.current_page }} of  {{ seller_detail.seller_detail.last_page }}</span>
             </div>
         </div>
 
@@ -39,7 +39,7 @@
                 <div class="col-xs-2">A pagar</div>
                 <div class="col-xs-4">Fecha</div>
             </div>
-            <div class="col-xs-12" v-for="sale in seller_detail.data">
+            <div class="col-xs-12" v-for="sale in seller_detail.seller_detail.data">
                 <div class="col-xs-4">{{sale.phone}}</div>
                 <div class="col-xs-2">{{sale.type}}</div>
                 <div class="col-xs-2">{{sale.cost}}</div>
@@ -47,9 +47,11 @@
             </div>
         </div>
 
+        <div>A pagar: {{seller_detail.total_pay}}</div>
+
         <div class="text-right" v-if="seller_detail.last_page > 1">
             <ul class="pagination marginpulltop15">
-                <li v-for="page in range(1, seller_detail.last_page)" :key="page" :class="{active: page == seller_detail.current_page}">
+                <li v-for="page in range(1, seller_detail.seller_detail.last_page)" :key="page" :class="{active: page == seller_detail.seller_detail.current_page}">
                     <a href="#" @click.prevent="onLoadSales(page)">{{ page }}</a>
                 </li>
             </ul>

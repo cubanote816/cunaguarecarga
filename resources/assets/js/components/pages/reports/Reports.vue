@@ -27,7 +27,7 @@
         </span>
         </div>
         <div class="col-sm-6 text-right">
-          <span class="page-info">Page {{reports.current_page }} of  {{ reports.last_page }}</span>
+          <span class="page-info">Page {{reports.reports.current_page }} of  {{ reports.reports.last_page }}</span>
         </div>
       </div>
 
@@ -40,18 +40,18 @@
       <div class="col-xs-2">A pagar</div>
       <div class="col-xs-4">Fecha</div>
     </div>
-    <div class="col-xs-12" v-for="sale in reports.data">
+    <div class="col-xs-12" v-for="sale in reports.reports.data">
       <div class="col-xs-4">{{sale.phone}}</div>
       <div class="col-xs-2">{{sale.type}}</div>
       <div class="col-xs-2">{{sale.cost}}</div>
       <div class="col-xs-4">{{sale.created_at}}</div>
     </div>
-    <div>A pagar: {{reports.total}}</div>
+    <div>A pagar: {{reports.total_pay}}</div>
 
 
-    <div class="text-right" v-if="reports.last_page > 1">
+    <div class="text-right" v-if="reports.reports.last_page > 1">
       <ul class="pagination marginpulltop15">
-        <li v-for="page in range(1, reports.last_page)" :key="page" :class="{active: page == reports.current_page}">
+        <li v-for="page in range(1, reports.reports.last_page)" :key="page" :class="{active: page == reports.reports.current_page}">
           <a href="#" @click.prevent="onLoadReport(page)">{{ page }}</a>
         </li>
       </ul>
@@ -69,7 +69,7 @@
     data () {
       return {
         dateFrom: null,
-        dateTo: null
+        dateTo: null,
       }
     },
 

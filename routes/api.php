@@ -64,6 +64,7 @@ Route::group(['prefix' => 'v1'], function () {
         Route::post('order', 'OrderController@setOrder');
 
         Route::get('sellers', 'SellersController@getSellers');
+        Route::get('seller/detail', 'SellersController@getSellerDetail');
 
         Route::get('contracts', 'ContractController@getContracts');
         Route::get('contractor', 'ContractController@getContractor');

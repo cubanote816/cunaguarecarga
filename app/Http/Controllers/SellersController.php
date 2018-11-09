@@ -31,7 +31,11 @@ class SellersController extends Controller
           ->orderBy('type', 'desc')
           ->filter($request->only('dateFrom', 'dateTo'));
 
-      return ['seller_detail' => $seller_detail->paginate()];
+          $to_pay = (new Sale)
+          ->where('sold_by', $request->id)
+          ->filter($request->only('dateFrom', 'dateTo'))->sum('cost');
+
+      return ['seller_detail' => $seller_detail->paginate(), 'total_pay' => $to_pay];
   }
 
 }

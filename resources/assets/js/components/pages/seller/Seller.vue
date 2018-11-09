@@ -29,7 +29,9 @@
                         <div class="col-xs-5">{{seller.hired.email}}</div>
                         <div class="col-xs-1">{{(seller.hired.active == 1) ? 'Activado' : 'Desactivado'}}</div>
                         <div class="col-xs-1">{{seller.agreement}}</div>
-                        <div class="col-xs-1"></div>
+                        <div class="col-xs-1">
+                        <router-link :to="'/seller/detail/' + seller.hired.id"><a>Ver detalles</a></router-link>
+                        </div>
                     </div>
                 </div>
             </div>

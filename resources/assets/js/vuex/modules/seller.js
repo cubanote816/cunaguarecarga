@@ -6,6 +6,10 @@ const state = {
     current_page: 1,
     data: [],
   },
+  seller_detail: {
+    current_page: 1,
+    data: [],
+  },
 }
 
 const actions = {
@@ -24,13 +28,34 @@ const actions = {
           reject(error.response.data)
         })
     })
-  }
+  },
+
+  getSellerDetail ({commit, dispatch}, params) {
+    commit('SELLERDETAIL')
+
+    return new Promise((resolve, reject) => {
+      axios.get(Config.apiPath + 'seller/detail', {params})
+        .then(
+          response => {
+            commit('SELLERDETAIL_OK', response.data)
+            resolve()
+          })
+        .catch(error => {
+          commit('SELLERDETAIL_FAIL')
+          reject(error.response.data)
+        })
+    })
+  },
 }
 
 const mutations = {
   SELLERS_OK (state, seller) {
     state.sellers = seller
-  }
+  },
+
+  SELLERDETAIL_OK (state, sellerDetail) {
+    state.seller_detail = sellerDetail
+  },
 }
 
 export default {

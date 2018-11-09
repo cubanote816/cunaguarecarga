@@ -16,7 +16,7 @@ const actions = {
       axios.get(Config.apiPath + 'sellers', {params})
         .then(
           response => {
-            commit('SELLERS_OK', response.data)
+            commit('SELLERS_OK', response.data.sellers)
             resolve()
           })
         .catch(error => {

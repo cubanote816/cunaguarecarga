@@ -16,7 +16,7 @@ const actions = {
       axios.get(Config.apiPath + 'reports', {params})
         .then(
           response => {
-            commit('REPORTS_OK', response.data)
+            commit('REPORTS_OK', response.data.reports)
             resolve()
           })
         .catch(error => {

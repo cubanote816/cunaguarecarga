@@ -11,7 +11,7 @@
         <hr>
         <div class="row marginbot10">
           <div class="col-sm-6 text-right">
-            <span class="page-info">Page {{ sellers.sellers.current_page }} of {{ sellers.sellers.last_page }}</span>
+            <span class="page-info">Page {{ sellers.current_page }} of {{ sellers.last_page }}</span>
           </div>
         </div>
 
@@ -24,7 +24,7 @@
                         <div class="col-xs-1">Acuerdo</div>
                         <div class="col-xs-1"></div>
                     </div>
-                    <div class="col-xs-12" v-for="seller in sellers.sellers.data">
+                    <div class="col-xs-12" v-for="seller in sellers.data">
                         <div class="col-xs-4">{{seller.hired.name}}</div>
                         <div class="col-xs-5">{{seller.hired.email}}</div>
                         <div class="col-xs-1">{{(seller.hired.active == 1) ? 'Activado' : 'Desactivado'}}</div>
@@ -33,9 +33,9 @@
                     </div>
                 </div>
             </div>
-            <div class="text-right" v-if="sellers.sellers.last_page > 1">
+            <div class="text-right" v-if="sellers.last_page > 1">
               <ul class="pagination marginpulltop15">
-                <li v-for="page in range(1, sellers.sellers.last_page)" :key="page" :class="{active: page == sellers.sellers.current_page}">
+                <li v-for="page in range(1, sellers.last_page)" :key="page" :class="{active: page == sellers.current_page}">
                   <a href="#" @click.prevent="onLoadSellers(page)">{{ page }}</a>
                 </li>
               </ul>

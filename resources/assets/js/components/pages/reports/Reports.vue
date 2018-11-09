@@ -1,5 +1,13 @@
 <template>
   <div class="container" id="reports">
+  <div class="col-sm-2">
+    <ul class="nav nav-pills nav-stacked">
+      <router-link tag="li" to="#" active-class="active"><a>Vendedores</a></router-link>
+
+      </router-link>
+    </ul>
+  </div>
+  <div class="col-sm-10">
     <h3>Reportes</h3>
 
     <hr>
@@ -19,7 +27,7 @@
         </span>
         </div>
         <div class="col-sm-6 text-right">
-          <span class="page-info">Page {{ reports.current_page }} of  {{ reports.last_page }}</span>
+          <span class="page-info">Page {{ reports.reports.current_page }} of  {{ reports.reports.last_page }}</span>
         </div>
       </div>
 
@@ -41,14 +49,15 @@
     <div>A pagar: {{reports.total}}</div>
 
 
-    <div class="text-right" v-if="reports.last_page > 1">
+    <div class="text-right" v-if="reports.reports.last_page > 1">
       <ul class="pagination marginpulltop15">
-        <li v-for="page in range(1, reports.last_page)" :key="page" :class="{active: page == reports.current_page}">
-          <a href="#" @click.prevent="onLoadSales(page)">{{ page }}</a>
+        <li v-for="page in range(1, reports.reports.last_page)" :key="page" :class="{active: page == reports.reports.current_page}">
+          <a href="#" @click.prevent="onLoadReport(page)">{{ page }}</a>
         </li>
       </ul>
     </div>
 
+    </div>
   </div>
 </template>
 

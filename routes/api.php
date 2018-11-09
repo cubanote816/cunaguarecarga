@@ -22,13 +22,25 @@ Route::group(['prefix' => 'v1'], function () {
      */
      Route::get('json', function () {
 
+      $hired_list = App\Contract::with('hired')->where('contractor', 9)->get();
+
+       foreach ($hired_list as $seller) {
+         $sellers[] = (new Sale)
+             ->where('sold_by', $seller->id)
+             ->orderBy('created_at', 'desc')
+             ->orderBy('type', 'desc')
+             ->paginate();
+
+         $pay_seller[] = (new Sale)
+             ->where('sold_by', $seller->id)
+             ->sum('cost');
+}
+         // $sellers[] = array_merge($sellers->toArray(), $pay_seller->toArray());
+
+         // $friends = $sellers->merge($pay_seller);
 
 
-       // $hired_list = App\Contract::with('hired')->where('contractor', 2)->get();
-       $seller_detail = Sale::where('sold_by', 9)->sum('cost');
-
-
-       return ['contracts' => $seller_detail];
+       return ['contratados' => $hired_list,'seller' => $sellers];
 
      });
     Route::post('auth/login', 'AuthController@login');

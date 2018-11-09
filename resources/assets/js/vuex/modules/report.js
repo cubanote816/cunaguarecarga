@@ -2,18 +2,21 @@ import axios from 'axios'
 import * as Config from '../../config'
 
 const state = {
-  reports: {},
+  reports: {
+    current_page: 1,
+    data: [],
+  },
 }
 
 const actions = {
-  reportsList ({commit, dispatch}) {
+  reportsList ({commit, dispatch}, params) {
     commit('REPORTS')
 
     return new Promise((resolve, reject) => {
-      axios.get(Config.apiPath + 'reports')
+      axios.get(Config.apiPath + 'reports', {params})
         .then(
           response => {
-            commit('REPORTS_OK', response.data.reports)
+            commit('REPORTS_OK', response.data)
             resolve()
           })
         .catch(error => {

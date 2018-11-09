@@ -13,8 +13,13 @@ class ReportController extends Controller
           ->where('sold_by', $request->user()->id)
           ->orderBy('created_at', 'desc')
           ->orderBy('type', 'desc')
-          ->filter($request->only('dateFrom', 'dateTo'))->get();
+          ->filter($request->only('dateFrom', 'dateTo'))->paginate();
 
-        return ['reports' => $reports];
+$to_pay = (new Sale)
+->where('sold_by', $request->user()->id)
+->filter($request->only('dateFrom', 'dateTo'))->sum('cost');
+
+
+        return ['reports' => $reports, 'total' => $to_pay];
       }
 }

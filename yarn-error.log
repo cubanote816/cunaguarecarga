@@ -1,8 +1,8 @@
 Arguments: 
-  C:\Program Files\nodejs\node.exe C:\Program Files (x86)\Yarn\bin\yarn.js
+  C:\Program Files\nodejs\node.exe C:\Program Files (x86)\Yarn\bin\yarn.js add vue-circle-progress
 
 PATH: 
-  C:\Users\cunaguero\bin;C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\local\bin;C:\Program Files\Git\usr\bin;C:\Program Files\Git\usr\bin;C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\bin;C:\Users\cunaguero\bin;C:\Program Files\Docker\Docker\Resources\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0;C:\WINDOWS\System32\OpenSSH;C:\Program Files\Git\cmd;C:\xampp\php;C:\ProgramData\ComposerSetup\bin;C:\Program Files\nodejs;C:\Program Files (x86)\Yarn\bin;C:\Users\cunaguero\AppData\Local\Microsoft\WindowsApps;C:\Users\cunaguero\AppData\Roaming\Composer\vendor\bin;C:\Users\cunaguero\AppData\Roaming\npm;C:\Users\cunaguero\AppData\Local\Yarn\bin;C:\Program Files\Git\usr\bin\vendor_perl;C:\Program Files\Git\usr\bin\core_perl
+  C:\Users\cunaguero\bin;C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\local\bin;C:\Program Files\Git\usr\bin;C:\Program Files\Git\usr\bin;C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\bin;C:\Users\cunaguero\bin;C:\Program Files\Docker\Docker\Resources\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0;C:\WINDOWS\System32\OpenSSH;C:\Program Files\Git\cmd;C:\xampp\php;C:\ProgramData\ComposerSetup\bin;C:\Program Files\nodejs;C:\Program Files (x86)\Yarn\bin;C:\HashiCorp\Vagrant\bin;C:\Users\cunaguero\AppData\Local\Microsoft\WindowsApps;C:\Users\cunaguero\AppData\Roaming\Composer\vendor\bin;C:\Users\cunaguero\AppData\Roaming\npm;C:\Users\cunaguero\AppData\Local\Yarn\bin;C:\Program Files\Git\usr\bin\vendor_perl;C:\Program Files\Git\usr\bin\core_perl
 
 Yarn version: 
   1.12.1
@@ -14,17 +14,9 @@ Platform:
   win32 x64
 
 Trace: 
-  Error: https://registry.yarnpkg.com/faker/-/faker-4.1.0.tgz: ESOCKETTIMEDOUT
-      at ClientRequest.<anonymous> (C:\Program Files (x86)\Yarn\lib\cli.js:125174:19)
-      at Object.onceWrapper (events.js:313:30)
-      at emitNone (events.js:106:13)
-      at ClientRequest.emit (events.js:208:7)
-      at TLSSocket.emitTimeout (_http_client.js:708:34)
-      at Object.onceWrapper (events.js:313:30)
-      at emitNone (events.js:106:13)
-      at TLSSocket.emit (events.js:208:7)
-      at TLSSocket.Socket._onTimeout (net.js:407:8)
-      at ontimeout (timers.js:475:11)
+  Error: getaddrinfo ENOTFOUND registry.yarnpkg.com registry.yarnpkg.com:443
+      at errnoException (dns.js:50:10)
+      at GetAddrInfoReqWrap.onlookup [as oncomplete] (dns.js:92:26)
 
 npm manifest: 
   {
@@ -72,6 +64,7 @@ npm manifest:
       "vue": "^2.5.16",
       "vue-charts": "^0.2.1",
       "vue-router": "^3.0.1",
+      "vue-tables-2": "^1.4.70",
       "vuex": "^3.0.1",
       "vuex-router-sync": "^5.0.0",
       "webpack-bundle-analyzer": "^2.9.0",
@@ -117,6 +110,13 @@ Lockfile:
     dependencies:
       "@babel/types" "7.0.0-beta.44"
   
+  "@babel/helper-module-imports@^7.0.0-beta.49":
+    version "7.0.0"
+    resolved "https://registry.yarnpkg.com/@babel/helper-module-imports/-/helper-module-imports-7.0.0.tgz#96081b7111e486da4d2cd971ad1a4fe216cc2e3d"
+    integrity sha512-aP/hlLq01DWNEiDg4Jn23i+CXxW/owM4WpDLFUbpjxe4NS3BhLVZQ5i7E0ZrxuQ/vwekIeciyamgB1UIYxxM6A==
+    dependencies:
+      "@babel/types" "^7.0.0"
+  
   "@babel/helper-split-export-declaration@7.0.0-beta.44":
     version "7.0.0-beta.44"
     resolved "https://registry.yarnpkg.com/@babel/helper-split-export-declaration/-/helper-split-export-declaration-7.0.0-beta.44.tgz#c0b351735e0fbcb3822c8ad8db4e583b05ebd9dc"
@@ -161,6 +161,15 @@ Lockfile:
     dependencies:
       esutils "^2.0.2"
       lodash "^4.2.0"
+      to-fast-properties "^2.0.0"
+  
+  "@babel/types@^7.0.0":
+    version "7.1.5"
+    resolved "https://registry.yarnpkg.com/@babel/types/-/types-7.1.5.tgz#12fe64e91a431234b7017b4227a78cc0eec4e081"
+    integrity sha512-sJeqa/d9eM/bax8Ivg+fXF7FpN3E/ZmTrWbkk6r+g7biVYfALMnLin4dKijsaqEhpd2xvOGfQTkQkD31YCVV4A==
+    dependencies:
+      esutils "^2.0.2"
+      lodash "^4.17.10"
       to-fast-properties "^2.0.0"
   
   "@cypress/listr-verbose-renderer@0.4.1":
@@ -413,6 +422,13 @@ Lockfile:
     version "4.0.0"
     resolved "https://registry.yarnpkg.com/arr-diff/-/arr-diff-4.0.0.tgz#d6461074febfec71e7e15235761a329a5dc7c520"
   
+  arr-filter@^1.1.0:
+    version "1.1.2"
+    resolved "https://registry.yarnpkg.com/arr-filter/-/arr-filter-1.1.2.tgz#43fdddd091e8ef11aa4c45d9cdc18e2dff1711ee"
+    integrity sha1-Q/3d0JHo7xGqTEXZzcGOLf8XEe4=
+    dependencies:
+      make-iterator "^1.0.0"
+  
   arr-flatten@^1.0.1, arr-flatten@^1.1.0:
     version "1.1.0"
     resolved "https://registry.yarnpkg.com/arr-flatten/-/arr-flatten-1.1.0.tgz#36048bbff4e7b47e136644316c99669ea5ae91f1"
@@ -424,6 +440,13 @@ Lockfile:
   array-differ@^1.0.0:
     version "1.0.0"
     resolved "https://registry.yarnpkg.com/array-differ/-/array-differ-1.0.0.tgz#eff52e3758249d33be402b8bb8e564bb2b5d4031"
+  
+  array-every@^0.1.2:
+    version "0.1.2"
+    resolved "https://registry.yarnpkg.com/array-every/-/array-every-0.1.2.tgz#be54cf7fbfc4c4777bba85c7af7edac2836d83ed"
+    integrity sha1-vlTPf7/ExHd7uoXHr37awoNtg+0=
+    dependencies:
+      make-iterator "^0.1.1"
   
   array-find-index@^1.0.1:
     version "1.0.2"
@@ -443,6 +466,22 @@ Lockfile:
     dependencies:
       define-properties "^1.1.2"
       es-abstract "^1.7.0"
+  
+  array-intersection@^0.1.2:
+    version "0.1.2"
+    resolved "https://registry.yarnpkg.com/array-intersection/-/array-intersection-0.1.2.tgz#b14ef021df25e9c9d804116c847cc6a0d67cface"
+    integrity sha1-sU7wId8l6cnYBBFshHzGoNZ8+s4=
+    dependencies:
+      array-every "^0.1.2"
+      array-slice "^0.2.3"
+      array-unique "^0.2.1"
+      filter-array "^0.2.0"
+      index-of "^0.1.1"
+  
+  array-slice@^0.2.3:
+    version "0.2.3"
+    resolved "https://registry.yarnpkg.com/array-slice/-/array-slice-0.2.3.tgz#dd3cfb80ed7973a75117cdac69b0b99ec86186f5"
+    integrity sha1-3Tz7gO15c6dRF82sabC5nshhhvU=
   
   array-union@^1.0.1:
     version "1.0.2"
@@ -1729,6 +1768,11 @@ Lockfile:
     version "1.0.4"
     resolved "https://registry.yarnpkg.com/clone/-/clone-1.0.4.tgz#da309cc263df15994c688ca902179ca3c7cd7c7e"
   
+  clone@^2.1.1:
+    version "2.1.2"
+    resolved "https://registry.yarnpkg.com/clone/-/clone-2.1.2.tgz#1b7f4b9f591f1e8f83670401600345a02887435f"
+    integrity sha1-G39Ln1kfHo+DZwQBYANFoCiHQ18=
+  
   co@3.1.0:
     version "3.1.0"
     resolved "https://registry.yarnpkg.com/co/-/co-3.1.0.tgz#4ea54ea5a08938153185e15210c68d9092bc1b78"
@@ -2301,6 +2345,11 @@ Lockfile:
   de-indent@^1.0.2:
     version "1.0.2"
     resolved "https://registry.yarnpkg.com/de-indent/-/de-indent-1.0.2.tgz#b2038e846dc33baa5796128d0804b455b8c1e21d"
+  
+  debounce@^1.1:
+    version "1.2.0"
+    resolved "https://registry.yarnpkg.com/debounce/-/debounce-1.2.0.tgz#44a540abc0ea9943018dc0eaa95cce87f65cd131"
+    integrity sha512-mYtLl1xfZLi1m4RtQYlZgJUNQjl4ZxVnHzIR8nLLgi4q1YT8o/WM+MK/f8yfcc9s5Ir5zRaPZyZU6xs1Syoocg==
   
   debug@2.6.9, debug@^2.1.2, debug@^2.2.0, debug@^2.3.3, debug@^2.6.6, debug@^2.6.8, debug@^2.6.9:
     version "2.6.9"
@@ -3441,6 +3490,15 @@ Lockfile:
       repeat-string "^1.6.1"
       to-regex-range "^2.1.0"
   
+  filter-array@^0.2.0:
+    version "0.2.0"
+    resolved "https://registry.yarnpkg.com/filter-array/-/filter-array-0.2.0.tgz#9f6f4ceaf5b5e8a6b674a5b5460537714a8c51f1"
+    integrity sha1-n29M6vW16Ka2dKW1RgU3cUqMUfE=
+    dependencies:
+      arr-filter "^1.1.0"
+      kind-of "^1.1.0"
+      micromatch "^2.1.0"
+  
   finalhandler@1.1.1:
     version "1.1.1"
     resolved "https://registry.yarnpkg.com/finalhandler/-/finalhandler-1.1.1.tgz#eebf4ed840079c83f4249038c9d703008301b105"
@@ -3529,7 +3587,7 @@ Lockfile:
     version "1.0.2"
     resolved "https://registry.yarnpkg.com/for-in/-/for-in-1.0.2.tgz#81068d295a8142ec0ac726c6e2200c30fb6d5e80"
   
-  for-own@^0.1.4:
+  for-own@^0.1.1, for-own@^0.1.4:
     version "0.1.5"
     resolved "https://registry.yarnpkg.com/for-own/-/for-own-0.1.5.tgz#5265c681a4f294dabbf17c9509b6763aa84510ce"
     dependencies:
@@ -4363,6 +4421,11 @@ Lockfile:
     version "3.2.0"
     resolved "https://registry.yarnpkg.com/indent-string/-/indent-string-3.2.0.tgz#4a5fd6d27cc332f37e5419a504dbb837105c9289"
   
+  index-of@^0.1.1:
+    version "0.1.1"
+    resolved "https://registry.yarnpkg.com/index-of/-/index-of-0.1.1.tgz#d855af36341b284dad61bbd71695c6c694c157ac"
+    integrity sha1-2FWvNjQbKE2tYbvXFpXGxpTBV6w=
+  
   indexes-of@^1.0.1:
     version "1.0.1"
     resolved "https://registry.yarnpkg.com/indexes-of/-/indexes-of-1.0.1.tgz#f30f716c8e2bd346c7b67d3df3915566a7c05607"
@@ -4907,6 +4970,11 @@ Lockfile:
     version "1.0.0"
     resolved "https://registry.yarnpkg.com/killable/-/killable-1.0.0.tgz#da8b84bd47de5395878f95d64d02f2449fe05e6b"
   
+  kind-of@^1.1.0:
+    version "1.1.0"
+    resolved "https://registry.yarnpkg.com/kind-of/-/kind-of-1.1.0.tgz#140a3d2d41a36d2efcfa9377b62c24f8495a5c44"
+    integrity sha1-FAo9LUGjbS78+pN3tiwk+ElaXEQ=
+  
   kind-of@^3.0.2, kind-of@^3.0.3, kind-of@^3.2.0:
     version "3.2.2"
     resolved "https://registry.yarnpkg.com/kind-of/-/kind-of-3.2.2.tgz#31ea21a734bab9bbb0f32466d893aea51e4a3c64"
@@ -5341,6 +5409,20 @@ Lockfile:
     dependencies:
       pify "^3.0.0"
   
+  make-iterator@^0.1.1:
+    version "0.1.1"
+    resolved "https://registry.yarnpkg.com/make-iterator/-/make-iterator-0.1.1.tgz#873d27b8198a465a81483b6f5d16da4e863ecf5b"
+    integrity sha1-hz0nuBmKRlqBSDtvXRbaToY+z1s=
+    dependencies:
+      for-own "^0.1.1"
+  
+  make-iterator@^1.0.0:
+    version "1.0.1"
+    resolved "https://registry.yarnpkg.com/make-iterator/-/make-iterator-1.0.1.tgz#29b33f312aa8f547c4a5e490f56afcec99133ad6"
+    integrity sha512-pxiuXh0iVEq7VM7KMIhs5gxsfxCux2URptUQaXo4iZZJxBAzTPOLE2BumO5dbfVYq/hBJFBR/a1mFDmOx5AGmw==
+    dependencies:
+      kind-of "^6.0.2"
+  
   map-cache@^0.2.2:
     version "0.2.2"
     resolved "https://registry.yarnpkg.com/map-cache/-/map-cache-0.2.2.tgz#c32abd0bd6525d9b051645bb4f26ac5dc98a0dbf"
@@ -5424,11 +5506,16 @@ Lockfile:
     dependencies:
       readable-stream "^2.0.1"
   
+  merge@^1.2.0:
+    version "1.2.1"
+    resolved "https://registry.yarnpkg.com/merge/-/merge-1.2.1.tgz#38bebf80c3220a8a487b6fcfb3941bb11720c145"
+    integrity sha512-VjFo4P5Whtj4vsLzsYBu5ayHhoHJ0UqNm7ibvShmbmoz7tGi0vXaoJbGdB+GmDMLUdg8DpQXEIeVDAe8MaABvQ==
+  
   methods@~1.1.2:
     version "1.1.2"
     resolved "https://registry.yarnpkg.com/methods/-/methods-1.1.2.tgz#5529a4d67654134edcc5266656835b0f851afcee"
   
-  micromatch@^2.3.11, micromatch@^2.3.7:
+  micromatch@^2.1.0, micromatch@^2.3.11, micromatch@^2.3.7:
     version "2.3.11"
     resolved "https://registry.yarnpkg.com/micromatch/-/micromatch-2.3.11.tgz#86677c97d1720b363431d04d0d15293bd38c1565"
     dependencies:
@@ -8387,6 +8474,20 @@ Lockfile:
       vue-style-loader "^3.0.0"
       vue-template-es2015-compiler "^1.6.0"
   
+  vue-pagination-2@^1.6:
+    version "1.6.2"
+    resolved "https://registry.yarnpkg.com/vue-pagination-2/-/vue-pagination-2-1.6.2.tgz#9555a7c1d330cb0d290c9a06dc77d2883ac3e83d"
+    integrity sha512-t0UlPJYIgPHJ6ovh32HkQZkvKROMBssfyOQxueFYWbjYwZmhug0HrGEHezrCkRIzNggvjxLXAhLyoRqOlCdajw==
+    dependencies:
+      merge "^1.2.0"
+      vue ">=2.0.0"
+      vuex "^2.0.0"
+  
+  vue-resource@^0.9.0:
+    version "0.9.3"
+    resolved "https://registry.yarnpkg.com/vue-resource/-/vue-resource-0.9.3.tgz#ab46e1c44ea219142dcc28ae4043b3b04c80959d"
+    integrity sha1-q0bhxE6iGRQtzCiuQEOzsEyAlZ0=
+  
   vue-router@^3.0.1:
     version "3.0.1"
     resolved "https://registry.yarnpkg.com/vue-router/-/vue-router-3.0.1.tgz#d9b05ad9c7420ba0f626d6500d693e60092cc1e9"
@@ -8397,6 +8498,20 @@ Lockfile:
     dependencies:
       hash-sum "^1.0.2"
       loader-utils "^1.0.2"
+  
+  vue-tables-2@^1.4.70:
+    version "1.4.70"
+    resolved "https://registry.yarnpkg.com/vue-tables-2/-/vue-tables-2-1.4.70.tgz#6da0035764fee73173e14728d1ff5c1c451118a5"
+    integrity sha512-lexKk46BtRfivir1iVHIGTJjm8f4GrsL1hc4dOkDH7kVSEORc09iR9sp9uk3/vzQ101QgObdWEve5X4gLdctEQ==
+    dependencies:
+      "@babel/helper-module-imports" "^7.0.0-beta.49"
+      array-intersection "^0.1.2"
+      clone "^2.1.1"
+      debounce "^1.1"
+      merge "^1.2.0"
+      vue ">=2.0.0"
+      vue-pagination-2 "^1.6"
+      vue-resource "^0.9.0"
   
   vue-template-compiler@^2.5.13:
     version "2.5.16"
@@ -8409,6 +8524,11 @@ Lockfile:
     version "1.6.0"
     resolved "https://registry.yarnpkg.com/vue-template-es2015-compiler/-/vue-template-es2015-compiler-1.6.0.tgz#dc42697133302ce3017524356a6c61b7b69b4a18"
   
+  vue@>=2.0.0:
+    version "2.5.17"
+    resolved "https://registry.yarnpkg.com/vue/-/vue-2.5.17.tgz#0f8789ad718be68ca1872629832ed533589c6ada"
+    integrity sha512-mFbcWoDIJi0w0Za4emyLiW72Jae0yjANHbCVquMKijcavBGypqlF7zHRgMa5k4sesdv7hv2rB4JPdZfR+TPfhQ==
+  
   vue@^2.0.3, vue@^2.5.16:
     version "2.5.16"
     resolved "https://registry.yarnpkg.com/vue/-/vue-2.5.16.tgz#07edb75e8412aaeed871ebafa99f4672584a0085"
@@ -8416,6 +8536,11 @@ Lockfile:
   vuex-router-sync@^5.0.0:
     version "5.0.0"
     resolved "https://registry.yarnpkg.com/vuex-router-sync/-/vuex-router-sync-5.0.0.tgz#1a225c17a1dd9e2f74af0a1b2c62072e9492b305"
+  
+  vuex@^2.0.0:
+    version "2.5.0"
+    resolved "https://registry.yarnpkg.com/vuex/-/vuex-2.5.0.tgz#20f0265ade6c9a5ac6724a405d3ffdb4726c9741"
+    integrity sha512-5oJPOJySBgSgSzoeO+gZB/BbN/XsapgIF6tz34UwJqnGZMQurzIO3B4KIBf862gfc9ya+oduY5sSkq+5/oOilQ==
   
   vuex@^3.0.1:
     version "3.0.1"
@@ -8735,6 +8860,11 @@ Lockfile:
       cliui "^2.1.0"
       decamelize "^1.0.0"
       window-size "0.1.0"
+  
+  yarn@^1.12.1:
+    version "1.12.1"
+    resolved "https://registry.yarnpkg.com/yarn/-/yarn-1.12.1.tgz#afa478c9234ee55e8f4cdcfb994acfa54b69c95b"
+    integrity sha512-vdVLrYWx73k4QR8ZpQQ3HJg/X8aAunjUHuPlADR/ogmZOhnqgAdETPz0e/Df+MW8Dno7F1dOxS5e3G6niobumw==
   
   yauzl@2.4.1:
     version "2.4.1"

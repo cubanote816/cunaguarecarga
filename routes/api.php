@@ -25,10 +25,7 @@ Route::group(['prefix' => 'v1'], function () {
 
 
        // $hired_list = App\Contract::with('hired')->where('contractor', 2)->get();
-       $seller_detail = (new Sale)
-           ->where('sold_by',9)
-           ->orderBy('created_at', 'desc')
-           ->orderBy('type', 'desc')->get();
+       $seller_detail = Sale::where('sold_by', 9)->sum('cost');
 
 
        return ['contracts' => $seller_detail];

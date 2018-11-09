@@ -91,19 +91,18 @@
       }
     },
 
-    mounted () {
-      this.balance = 1000
-      this.getContractor()
-      this.price = this.contractor.agreement
-      this.subtotal = 0.00
-    },
     computed: {
       ...mapState({
         me: state => state.auth.me,
         contractor: state => state.contract.contractor,
       })
     },
-
+    mounted () {
+      this.balance = 1000
+      this.getContractor()
+      this.price = this.contractor.agreement
+      this.subtotal = 0.00
+    },
     methods: {
       ...mapActions([
         'managerUser',

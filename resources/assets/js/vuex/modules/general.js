@@ -57,6 +57,7 @@ const mutations = {
     'LOAD_SELLERS',
     'SELLER',
     'SELLERDETAIL',
+    'REPORTS',
   ], (state) => {
     state.loading = true
   }),
@@ -96,6 +97,8 @@ const mutations = {
     'SELLER_FAIL',
     'SELLERDETAIL_OK',
     'SELLERDETAIL_FAIL',
+    'REPORTS_OK',
+    'REPORTS_FAIL',
   ], (state) => {
     state.loading = false
   }),

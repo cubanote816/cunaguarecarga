@@ -8,6 +8,7 @@ import general from './modules/general'
 import order from './modules/order'
 import seller from './modules/seller'
 import contract from './modules/contract'
+import report from './modules/report'
 
 Vue.use(Vuex)
 
@@ -24,5 +25,6 @@ export default new Vuex.Store({
     order,
     seller,
     contract,
+    report,
   }
 })

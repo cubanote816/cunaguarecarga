@@ -26,9 +26,9 @@ Route::group(['prefix' => 'v1'], function () {
 
        // $hired_list = App\Contract::with('hired')->where('contractor', 2)->get();
        $seller_detail = (new Sale)
-           ->where('sold_by',2)
+           ->where('sold_by',9)
            ->orderBy('created_at', 'desc')
-           ->orderBy('type', 'desc')->paginate();
+           ->orderBy('type', 'desc')->get();
 
 
        return ['contracts' => $seller_detail];
@@ -58,6 +58,8 @@ Route::group(['prefix' => 'v1'], function () {
 
         Route::get('contracts', 'ContractController@getContracts');
         Route::get('contractor', 'ContractController@getContractor');
+
+        Route::get('reports', 'ReportController@reports');
     });
 
 });

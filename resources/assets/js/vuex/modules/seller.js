@@ -2,60 +2,35 @@ import axios from 'axios'
 import * as Config from '../../config'
 
 const state = {
-  sellers: {},
-  seller_detail: {
+  sellers: {
     current_page: 1,
     data: [],
   },
 }
 
 const actions = {
-
-  getSellers ({commit, dispatch}) {
-    commit('SELLER')
+  sellersList ({commit, dispatch}, params) {
+    commit('SELLERS')
 
     return new Promise((resolve, reject) => {
-      axios.get(Config.apiPath + 'getsellers')
+      axios.get(Config.apiPath + 'sellers', {params})
         .then(
           response => {
-            commit('SELLER_OK', response.data.sellers)
+            commit('SELLERS_OK', response.data)
             resolve()
           })
         .catch(error => {
-          commit('SELLER_FAIL')
+          commit('SELLERS_FAIL')
           reject(error.response.data)
         })
     })
-  },
-
-  getSellerDetail ({commit, dispatch}, params) {
-    commit('SELLERDETAIL')
-
-    return new Promise((resolve, reject) => {
-      axios.get(Config.apiPath + 'seller/detail', {params})
-        .then(
-          response => {
-            commit('SELLERDETAIL_OK', response.data.seller_detail)
-            resolve()
-          })
-        .catch(error => {
-          commit('SELLERDETAIL_FAIL')
-          reject(error.response.data)
-        })
-    })
-  },
+  }
 }
 
 const mutations = {
-
-  SELLER_OK (state, sellers) {
-    state.sellers = sellers
-  },
-
-  SELLERDETAIL_OK (state, sellerDetail) {
-    state.seller_detail = sellerDetail
-  },
-
+  SELLERS_OK (state, seller) {
+    state.sellers = seller
+  }
 }
 
 export default {

@@ -11,7 +11,9 @@
   import { mapState, mapActions } from 'vuex'
 
   export default {
-
+    created () {
+      this.getContractor()
+    },
     components: {
     },
 
@@ -23,17 +25,19 @@
       }
     },
 
-    mounted () {
-    },
+    mounted () {},
 
     computed: {
       ...mapState({
         me: state => state.auth.me,
+        contractor: state => state.contract.contractor,
       }),
     },
 
     methods: {
+
       ...mapActions([
+        'getContractor',
       ]),
 
     }

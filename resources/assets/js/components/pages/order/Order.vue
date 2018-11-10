@@ -80,7 +80,6 @@
         items: [],
         balance: '',
         price: '',
-        test: '',
         subtotal: '0.00',
         form: {
           credit: '',
@@ -91,22 +90,22 @@
       }
     },
 
+    mounted () {
+      this.balance = 1000
+      this.subtotal = 0.00
+      this.price = this.contractor.agreement
+    },
+
     computed: {
       ...mapState({
         me: state => state.auth.me,
         contractor: state => state.contract.contractor,
       })
     },
-    mounted () {
-      this.balance = 1000
-      this.getContractor()
-      this.price = this.contractor.agreement
-      this.subtotal = 0.00
-    },
+
     methods: {
       ...mapActions([
         'managerUser',
-        'getContractor',
         'setOrder',
         'addToastMessage',
       ]),

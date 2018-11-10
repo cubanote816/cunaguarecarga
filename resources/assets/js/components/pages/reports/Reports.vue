@@ -1,32 +1,28 @@
 <template>
   <div class="container" id="reports">
-  <div class="col-sm-2">
-    <ul class="nav nav-pills nav-stacked">
-      <router-link tag="li" to="#" active-class="active"><a>Vendedores</a></router-link>
-
-      </router-link>
-    </ul>
-  </div>
-  <div class="col-sm-10">
     <h3>Reportes</h3>
 
     <hr>
 
     <div class="row marginbot10">
-      <div class="col-sm-6 filters">
+      <div class="col-sm-12 filters">
         <div class="input-group">
-          <span class="input-group-addon">From:</span>
+          <span class="input-group-addon">Vendedor:</span>
+          <select id="role" class="form-control date-filter" v-model="seller" placeholder="Vendedor">
+            <option v-for="seller_list in sellers_list" :value="seller_list.hired.id">{{seller_list.hired.name}}</option>
+          </select>
+          <span class="input-group-addon">Desde:</span>
           <input type="date" class="form-control date-filter" v-model="dateFrom" placeholder="Date from">
-          <span class="input-group-addon">To:</span>
+          <span class="input-group-addon">Hasta:</span>
           <input type="date" class="form-control date-filter" v-model="dateTo" placeholder="Date to">
           <span class="input-group-btn">
-          <button class="btn btn-primary" @click="onFilter">Filter</button>
+          <button class="btn btn-primary" @click="onFilter">Buscar</button>
         </span>
           <span class="input-group-btn">
-          <button class="btn btn-default" @click="onFilterClear">Clear</button>
+          <button class="btn btn-default" @click="onFilterClear">Reset</button>
         </span>
         </div>
-        <div class="col-sm-6 text-right">
+        <div class="col-sm-12 text-right">
           <span class="page-info">Page {{reports.reports.current_page }} of  {{ reports.reports.last_page }}</span>
         </div>
       </div>
@@ -56,8 +52,6 @@
         </li>
       </ul>
     </div>
-
-    </div>
   </div>
 </template>
 
@@ -70,17 +64,20 @@
       return {
         dateFrom: null,
         dateTo: null,
+        seller: null,
       }
     },
 
     mounted () {
       this.reportsList(this.params)
+      this.loadSeller()
     },
 
     computed: {
       ...mapState({
         me: state => state.auth.me,
         reports: state => state.report.reports,
+        sellers_list: state => state.seller.sellers_list,
       }),
 
       params () {
@@ -88,6 +85,7 @@
           page: this.reports.current_page,
           dateFrom: this.dateFrom,
           dateTo: this.dateTo,
+          seller: this.seller,
         }
       },
     },
@@ -95,6 +93,7 @@
     methods: {
       ...mapActions([
         'reportsList',
+        'loadSeller',
       ]),
 
       onLoadReport (page) {
@@ -108,6 +107,7 @@
       onFilterClear () {
         this.dateFrom = null
         this.dateTo = null
+        this.seller = null
         this.reportsList(this.params)
       },
     }

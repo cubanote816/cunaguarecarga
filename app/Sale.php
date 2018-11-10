@@ -41,6 +41,9 @@ public function scopeFilter($query, $filters)
             case 'dateTo':
                 $query->where('created_at', '<=', Carbon::parse($value)->toDateString());
                 break;
+          case 'seller':
+                $query->where('sold_by', '=', $value);
+                break;
         }
     }
 }

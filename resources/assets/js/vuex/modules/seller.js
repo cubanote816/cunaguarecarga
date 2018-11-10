@@ -10,6 +10,7 @@ const state = {
     current_page: 1,
     data: [],
   },
+  sellers_list: {},
 }
 
 const actions = {
@@ -46,6 +47,24 @@ const actions = {
         })
     })
   },
+
+  loadSeller ({commit, dispatch}) {
+    commit('LOAD_SELLERS')
+
+    return new Promise((resolve, reject) => {
+      axios.get(Config.apiPath + 'loadsellers')
+        .then(
+          response => {
+            commit('LOAD_SELLERS_OK', response.data.sellers)
+            resolve()
+          })
+        .catch(error => {
+          commit('LOAD_SELLERS_FAIL')
+          reject(error.response.data)
+        })
+    })
+  },
+
 }
 
 const mutations = {
@@ -55,6 +74,10 @@ const mutations = {
 
   SELLERDETAIL_OK (state, sellerDetail) {
     state.seller_detail = sellerDetail
+  },
+
+  LOAD_SELLERS_OK (state, sellerList) {
+    state.sellers_list = sellerList
   },
 }
 

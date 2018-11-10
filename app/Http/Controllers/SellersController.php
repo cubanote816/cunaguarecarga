@@ -38,4 +38,12 @@ class SellersController extends Controller
       return ['seller_detail' => $seller_detail->paginate(), 'total_pay' => $to_pay];
   }
 
+  public function getSellerList(Request $request)
+  {
+    $hired_list = Contract::with('hired')
+    ->where('contractor', $request->user()->id)
+    ->latest();
+
+    return ['sellers' => $hired_list->get()];
+  }
 }

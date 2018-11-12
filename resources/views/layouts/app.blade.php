@@ -12,7 +12,8 @@
 
    <!-- Styles -->
    <link href="{{ mix('css/app.css') }}" rel="stylesheet">
-
+   <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic">
+   <link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">
    <!-- Scripts -->
    <script>window.Laravel = {!! json_encode(['csrfToken' => csrf_token(), 'demoMode' => env('APP_DEMO')]) !!};</script>
 </head>

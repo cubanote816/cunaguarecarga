@@ -5,8 +5,11 @@ import jQuery from 'jquery'
 import moment from 'moment-mini'
 import store from './vuex/store' // vuex store instance
 import router from './router' // vue-router instance
+import 'font-awesome/css/font-awesome.css'
 import './mixins'
 import VueCharts from 'vue-charts'
+import VueMaterial from 'vue-material'
+import 'vue-material/dist/vue-material.min.css'
 
 /**
  * Assing global variables
@@ -21,6 +24,7 @@ window.moment = moment
  */
 
 require('bootstrap-sass')
+require('vue-material/dist/vue-material.min.css')
 
 /**
  * Vue Settings
@@ -28,6 +32,8 @@ require('bootstrap-sass')
 
 // Vue plugins
 Vue.use(VueCharts)
+Vue.use(VueMaterial)
+
 
 // Authorization header
 axios.interceptors.request.use(function (config) {

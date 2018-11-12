@@ -1,5 +1,6 @@
 import 'babel-polyfill'
 import Vue from 'vue'
+import Vuetify from 'vuetify'
 import axios from 'axios'
 import jQuery from 'jquery'
 import moment from 'moment-mini'
@@ -8,9 +9,9 @@ import router from './router' // vue-router instance
 import 'font-awesome/css/font-awesome.css'
 import './mixins'
 import VueCharts from 'vue-charts'
-import VueMaterial from 'vue-material'
-import 'vue-material/dist/vue-material.min.css'
-
+// import VueMaterial from 'vue-material'
+// import 'vue-material/dist/vue-material.min.css'
+import 'vuetify/dist/vuetify.min.css'
 /**
  * Assing global variables
  */
@@ -23,8 +24,8 @@ window.moment = moment
  * Require jQuery and Vue dependant libaries
  */
 
-require('bootstrap-sass')
-require('vue-material/dist/vue-material.min.css')
+require('bootstrap')
+// require('vue-material/dist/vue-material.min.css')
 
 /**
  * Vue Settings
@@ -32,8 +33,8 @@ require('vue-material/dist/vue-material.min.css')
 
 // Vue plugins
 Vue.use(VueCharts)
-Vue.use(VueMaterial)
-
+// Vue.use(VueMaterial)
+Vue.use(Vuetify)
 
 // Authorization header
 axios.interceptors.request.use(function (config) {

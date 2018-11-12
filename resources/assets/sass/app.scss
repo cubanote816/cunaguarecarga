@@ -3,8 +3,7 @@
 // Variables
 @import "variables";
 // Bootstrap
-@import "~bootstrap-sass/assets/stylesheets/bootstrap";
-
+@import "~bootstrap/scss/bootstrap";
 
 /**
  * Transitions
@@ -26,9 +25,6 @@
 .marginpulltop15{ margin-top: -15px; }
 .marginpulltop20{ margin-top: -20px; }
 .marginright10{ margin-right: 10px; }
-@media (max-width: $screen-sm-max){
-   .input-group-stack-sm{ display: block; }
-}
 
 /**
  * Spinner

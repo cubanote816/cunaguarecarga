@@ -40,7 +40,7 @@ export default {
     color: String
   },
 
-};
+}
 </script>
 
 <style>

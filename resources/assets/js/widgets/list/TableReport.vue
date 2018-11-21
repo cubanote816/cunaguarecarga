@@ -1,13 +1,20 @@
 <template>
-  <v-container grid-list-md text-xs-center>
-    <v-layout row wrap>
+  <v-layout row wrap>
       <v-flex xs12>
-        <v-flex xs12 sm6 offset-sm3>
-          <div class="grey--text text-xs-center">{{ user.name }}</div><br>
-          <div class="grey--text text-xs-center">{{ user.email }}</div><br>
-        </v-flex>
+        <h3 class="flex text-xs-left primary--text">Reportes</h3>
       </v-flex>
-      <v-flex xs12 sm3 offset-sm3>
+
+      <v-flex xs12 sm6 md3>
+        <v-select
+            v-model="seller"
+            :items="sellers.hired"
+            item-text="name"
+            item-value="id"
+            label="Vendedor"
+          ></v-select>
+      </v-flex>
+      <v-spacer></v-spacer>
+      <v-flex xs12 sm4 md3>
         <v-menu
           :close-on-content-click="false"
           v-model="dateFromMenu"
@@ -28,7 +35,7 @@
           <v-date-picker v-model="dateFrom" @input="dateFromMenu = false"></v-date-picker>
         </v-menu>
       </v-flex>
-      <v-flex xs12 sm3>
+      <v-flex xs12 sm4 md3>
         <v-menu
           :close-on-content-click="false"
           v-model="dateToMenu"
@@ -56,12 +63,13 @@
       <v-flex>
         <v-btn @click="onFilterClear">Reset</v-btn>
       </v-flex>
-        
+      
       <v-spacer></v-spacer>
       <v-flex xs12>
         <v-data-table
           :headers="headers"
-          :items="seller_detail"
+          :items="reports"
+          :search="search"
           :pagination.sync="pagination"
           class="elevation-1"
         >
@@ -87,33 +95,28 @@
           </template>
           <template slot="footer">
             <td class="text-xs-left">
-              <strong>Total a pagar: </strong>{{seller_detail_pay}}
+              <strong>Total a pagar: </strong>{{reports_detail}}
             </td>
             <td class="text-xs-left">
-              <strong>Total de recarga: </strong>{{seller_detail.length}}
+              <strong>Total de recarga: </strong>{{reports.length}}
             </td>
             <td></td>
             <td></td>
             <td></td>
           </template>
         </v-data-table>
-      </v-flex>
-    </v-layout>
-  </v-container>
+  </v-flex>
+</v-layout>
 </template>
-
-
 
 <script>
   import { mapActions, mapState } from 'vuex'
-
   export default {
-    name: 'Seller',
     data () {
       return {
-        dateFrom: '',
-        dateTo: '',
+        search: '',
         pagination: {},
+        selected: [],
         headers: [
           {
             text: 'Id',
@@ -126,6 +129,9 @@
           { text: 'Costo', value: 'cost' },
           { text: 'Creado a', value: 'created_at' },
         ],
+        dateFrom: null,
+        dateTo: null,
+        seller: null,
         date: new Date().toISOString().substr(0, 10),
         dateFromMenu: false,
         dateToMenu: false,
@@ -133,26 +139,22 @@
       }
     },
     mounted () {
-      this.getSellerDetail(this.params)
-      this.loadUser(this.id)
-      this.itemsSales = this.seller_detail.length
+      this.reportsList(this.params)
+      this.sellersList()
+      this.itemsSales = this.reports.length
     },
     computed: {
       ...mapState({
         me: state => state.auth.me,
-        user: state => state.users.user,
-        seller_detail: state => state.seller.seller_detail,
-        seller_detail_pay: state => state.seller.seller_detail_pay,
+        reports: state => state.report.reports,
+        sellers: state => state.seller.sellers,
+        reports_detail: state => state.report.reports_detail,
       }),
-      id () {
-        return this.$route.params.id
-      },
       params () {
         return {
-          id: this.$route.params.id,
-          page: this.seller_detail.current_page,
           dateFrom: this.dateFrom,
           dateTo: this.dateTo,
+          seller: this.seller,
         }
       },
       pages () {
@@ -165,26 +167,24 @@
     },
     methods: {
       ...mapActions([
-        'getSellerDetail',
-        'loadUser',
+        'sellersList',
+        'reportsList',
       ]),
-      onLoadSales (page) {
-        this.getSellerDetail({...this.params, page})
+
+      onLoadReport (page) {
+        this.reportsList({...this.params})
       },
 
       onFilter () {
-        this.getSellerDetail({...this.params, page: 1})
+        this.reportsList({...this.params})
       },
 
       onFilterClear () {
         this.dateFrom = null
         this.dateTo = null
-        this.getSellerDetail(this.params)
+        this.seller = null
+        this.reportsList(this.params)
       },
-    },
+    }
   }
 </script>
-
-<style scoped>
-
-</style>

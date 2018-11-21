@@ -1,141 +1,190 @@
 <template>
-    <div class="container" id="reseller">
-        <h3>Ordenn</h3>
-        <hr>
-        <div class="row">
-            <form class="form-horizontal row" role="form" @submit.prevent="calc">
-                <div>Costo: {{price}} </div>
-                <div class="col-xs-12">
-                    <div class="col-xs-5">
-                        <div class="form-group" :class="{ 'has-error': errors.cant }">
-                            <label for="credit" class="col-xs-6 control-label">Saldo para el movil</label>
-                            <div class="col-xs-6">
-                                <select id="credit" class="form-control" v-model="form.credit">
-                                    <option value="">--Please choose an option--</option>
-                                    <option value="1.5">15</option>
-                                    <option value="2">20</option>
-                                    <option value="3">30</option>
-                                    <option value="5">50</option>
-                                </select>
-
-                                <div class="help-block" v-if="errors.credit">
-                                    <div v-for="error in errors.credit"><strong>{{ error }}</strong></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xs-5">
-                        <div class="form-group">
-                            <label for="phone" class="col-xs-4 control-label">Numero</label>
-                            <div class="input-group col-xs-8">
-                                <span class="input-group-addon" id="basic-addon1">+53</span>
-                                <input type="text" id="phone" v-model="form.phone" class="form-control" placeholder="5xxxxxxx" required aria-describedby="basic-addon1">
-                            </div>
-
-                                <div class="help-block" v-if="errors.phone">
-                                    <div v-for="error in errors.phone"><strong>{{ error }}</strong></div>
-                                </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-2">
-                        <div class="form-group">
-                            <div class="col-md-6 col-md-offset-6">
-                                <button type="submit" class="btn btn-primary">
-                                    Add
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </form>
-            <hr>
-            <div class="col-xs-4">Numero</div>
-            <div class="col-xs-2">Saldo a depositar</div>
-            <div class="col-xs-4">Costo</div>
-            <div class="col-xs-2"></div>
-
-            <div v-for="(item, index) in items" v-on:remove="items.splice(index, 1)">
-                <div class="col-xs-4">{{item.phone}}</div>
-                <div class="col-xs-2">{{item.credit}}</div>
-                <div class="col-xs-4">{{item.cost}}</div>
-                <div class="col-xs-2">
-                    <button @click="remove(index)"> X</button>
-                </div>
-            </div>
-            <hr>
-            <div class="col-md-2 col-md-offset-10">Sub total: {{subtotal}}</div>
-            <div class="col-md-2 col-md-offset-10" v-if="items">
-                <button type="button" @click="save(items)">Confirmar</button>
-            </div>
-        </div>
-    </div>
+  <v-container grid-list-md>
+    <v-layout row wrap>
+      <v-flex xs12>
+        <h3 class="flex my-2 text-xs-left primary--text">Ordenar</h3>
+      </v-flex>
+      <v-flex xs12>
+        <span class="text-xs-left">Costo: {{price}}</span>
+      </v-flex>
+      <v-flex xs12>
+        <v-form ref="form" v-model="valid" lazy-validation @submit.prevent="calc" id="order-form">
+          <v-container grid-list-md text-xs-center>
+            <v-layout row wrap>
+              <v-flex xs5>
+                <v-text-field
+                  v-model="form.phone"
+                  :rules="phoneRules"
+                  label="Telefono"
+                  autofocus
+                  required
+                ></v-text-field>
+              </v-flex>
+              <v-flex xs5>
+                <v-select
+                  v-model="form.credit"
+                  :items="plans"
+                  item-text="text"
+                  item-value="value"
+                  :rules="creditRules"
+                  label="Credito"
+                  required
+                ></v-select>
+              </v-flex>
+              <v-flex xs2>
+                <v-btn color="primary" :disabled="! valid" type="submit" form="order-form">Agregar</v-btn>
+              </v-flex>
+            </v-layout>
+          </v-container>
+        </v-form>
+      </v-flex>
+      <v-flex xs12 v-if="items.length != 0">
+          <v-data-table
+            :headers="headers"
+            :items="indexItems"
+            hide-actions
+            item-key="id"
+            class="elevation-0"
+          >
+            <template slot="items" slot-scope="props">
+              <td class="text-xs-left">{{ props.item.phone }}</td>
+              <td class="text-xs-left">{{ props.item.credit }}</td>
+              <td class="text-xs-left">{{ props.item.cost }}</td>
+              <td class="text-xs-right">
+                <v-btn @click="remove(props.item.id)" flat icon color="red">
+                  <v-icon>delete</v-icon>
+                </v-btn>
+              </td>
+            </template>
+          </v-data-table>
+        <v-divider></v-divider>
+      </v-flex>      
+      <v-spacer></v-spacer>
+      <v-flex xs12 class="text-xs-right" v-if="items.length != 0">
+          Sub total: {{subtotal}}
+      </v-flex>
+        <v-flex xs12 class="text-xs-right" v-if="items.length != 0">
+          <v-btn type="button" @click="save(items)">Confirmar</v-btn>
+        </v-flex>
+    </v-layout>
+  </v-container>    
 </template>
 
 <script>
-  import { mapActions, mapState } from 'vuex'
+  import { mapState, mapActions } from 'vuex'
+
   export default {
-    name: 'Sale',
+
     data () {
       return {
+        valid: true,
+        phone: '',
+        phoneRules: [
+          v => ! ! v || 'Numero de telefono es requerido.',
+          v => /^[0-9]*$/.test(v) || 'El numero de telefono debe ser valido.',
+          v => (v && v.length <= 8) || 'El numero de telefono debe tener 8 caracteres.',
+          v => (v && v.length >= 8) || 'El numero de telefono debe tener 8 caracteres.',
+        ],
+        credit: '',
+        creditRules: [
+          v => ! ! v || 'Credito es requerido.'
+        ],
+        plans: [
+          { text: '15', value: 1.5 },
+          { text: '20', value: 2 },
+          { text: '30', value: 3 },
+          { text: '50', value: 5 },
+        ],
         items: [],
+        saleItem: [],
+        headers: [
+          {
+            text: 'Telefono',
+            align: 'left',
+            value: 'phone',
+            sortable: false
+          },
+          { text: 'Credito', value: 'credit', sortable: false },
+          { text: 'Costo', value: 'cost', sortable: false },
+          { text: '', value: 'action', align: 'right', sortable: false },
+
+        ],
         balance: '',
         price: '',
-        subtotal: '0.00',
+        subtotal: '0.0000',
         form: {
-          credit: '',
+          credit: null,
           phone: '',
-          cost: '',
+          cost: null,
         },
-        errors: {}
+        errors: {},
+        agreement: '',
+        x: null
       }
     },
-
     mounted () {
       this.balance = 1000
       this.subtotal = 0.00
-      this.price = this.contractor.agreement
+      this.price = this.me.agreement[0].agreement
+
+      // for (this.x in this.me.agreement) {
+      //   this.price += this.me.agreement[x]
+      //   this.agreement += this.me.agreement[x]
+      // }
     },
 
     computed: {
       ...mapState({
         me: state => state.auth.me,
         contractor: state => state.contract.contractor,
-      })
+      }),
+      indexItems () {
+        return this.items.map((item, index) => ({
+          id: index,
+          ...item
+        }))
+      },
     },
 
     methods: {
       ...mapActions([
         'managerUser',
+        'getContractor',
         'setOrder',
         'addToastMessage',
       ]),
       remove (index) { // TODO
+        this.saleItem = this.items[index]
+        this.subtotal = this.subtotal - this.saleItem.cost
         this.items.splice(index, 1) // why is this removing only the last row?
       },
       calc () {
-        this.form.cost = (this.price / 2) * this.form.credit
-        this.subtotal = this.form.cost + this.subtotal
-        switch (this.form.credit) {
-          case '1.5': {
-            this.form.credit = '15'
-            break
+        if (this.$refs.form.validate()) {
+          this.errors = {}
+          this.form.cost = (this.price / 2) * this.form.credit
+          this.subtotal = this.form.cost + this.subtotal
+          switch (this.form.credit) {
+            case 1.5: {
+              this.form.credit = '15'
+              break
+            }
+            case 2: {
+              this.form.credit = '20'
+              break
+            }
+            case 3: {
+              this.form.credit = '30'
+              break
+            }
+            case 5: {
+              this.form.credit = '50'
+              break
+            }
           }
-          case '2': {
-            this.form.credit = '20'
-            break
-          }
-          case '3': {
-            this.form.credit = '30'
-            break
-          }
-          case '5': {
-            this.form.credit = '50'
-            break
-          }
+          this.items.push({ credit: this.form.credit, phone: this.form.phone, cost: this.form.cost }) // what to push unto the rows array?
+          this.form.phone = ''
+          this.form.credit = null
         }
-        this.items.push({ credit: this.form.credit, phone: this.form.phone, cost: this.form.cost }) // what to push unto the rows array?
-        this.form.credit = ''
-        this.form.phone = ''
       },
       save (items) {
         this.errors = {}
@@ -150,12 +199,7 @@
           .catch((data) => {
             this.errors = data.errors || {}
           })
-      },
-
+      }
     }
   }
 </script>
-
-<style scoped>
-
-</style>

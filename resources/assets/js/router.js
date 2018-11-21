@@ -8,35 +8,35 @@ Vue.use(VueRouter)
 
 const routes = [
 
-  {path: '/', component: require('./components/pages/auth/Login.vue')},
-  {path: '/login', component: require('./components/pages/auth/Login.vue')},
-  {path: '/logout', component: require('./components/pages/auth/Logout.vue')},
-  {path: '/register/activate/:id', component: require('./components/pages/auth/Confirmation.vue')},
-  {path: '/register', component: require('./components/pages/auth/Register.vue'), meta: {requiresAuth: true}},
-  {path: '/profile', component: require('./components/pages/auth/Profile.vue'), meta: {requiresAuth: true}},
-  {path: '/order', component: require('./components/pages/order/Order.vue'), meta: {requiresAuth: true}},
-  {path: '/dashboard', component: require('./components/pages/dashboard/Dashboard.vue'), meta: {requiresAuth: true}},
-  {path: '/seller', component: require('./components/pages/seller/Seller.vue'), meta: {requiresAuth: true}},
-  {path: '/seller/detail/:id', component: require('./components/pages/seller/SellerDetail.vue'), meta: {requiresAuth: true}},
-  {path: '/reports', component: require('./components/pages/reports/Reports.vue'), meta: {requiresAuth: true}},
+  {path: '/', component: require('./pages/auth/Login.vue')},
+  {path: '/login', component: require('./pages/auth/Login.vue')},
+  {path: '/logout', component: require('./pages/auth/Logout.vue')},
+  {path: '/register/activate/:id', component: require('./pages/auth/Confirmation.vue')},
+  {path: '/register', component: require('./pages/auth/Register.vue'), meta: {requiresAuth: true}},
+  {path: '/profile', component: require('./pages/auth/Profile.vue'), meta: {requiresAuth: true}},
+  {path: '/order', component: require('./pages/order/Order.vue'), meta: {requiresAuth: true}},
+  {path: '/dashboard', component: require('./pages/dashboard/Dashboard.vue'), meta: {requiresAuth: true}},
+  {path: '/seller', component: require('./pages/seller/Seller.vue'), meta: {requiresAuth: true}},
+  {path: '/seller/detail/:id', component: require('./pages/seller/SellerDetail.vue'), meta: {requiresAuth: true}},
+  {path: '/reports', component: require('./pages/reports/Reports.vue'), meta: {requiresAuth: true}},
 
 
   {
     path: '/admin',
-    component: require('./components/pages/admin/Admin.vue'),
+    component: require('./pages/admin/Admin.vue'),
     meta: {requiresAdmin: true},
     children: [
       {path: '', redirect: 'dashboard'},
-      {path: 'dashboard', component: require('./components/pages/admin/dashboard/Dashboard.vue')},
+      {path: 'dashboard', component: require('./pages/admin/dashboard/Dashboard.vue')},
 
-      {path: 'users', component: require('./components/pages/admin/user/List.vue')},
-      {path: 'user/show/:id', component: require('./components/pages/admin/user/Show.vue')},
-      {path: 'user/edit/:id', component: require('./components/pages/admin/user/Edit.vue')},
+      {path: 'users', component: require('./pages/admin/user/List.vue')},
+      {path: 'user/show/:id', component: require('./pages/admin/user/Show.vue')},
+      {path: 'user/edit/:id', component: require('./pages/admin/user/Edit.vue')},
 
     ]
   },
 
-  {path: '*', component: require('./components/pages/404.vue')},
+  {path: '*', component: require('./pages/404.vue')},
 ]
 
 

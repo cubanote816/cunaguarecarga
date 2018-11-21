@@ -55,9 +55,9 @@ axios.interceptors.response.use(response => response, error => {
 })
 
 // Global Vue Components
-Vue.component('navbar', require('./components/layout/Navbar.vue'))
-Vue.component('spinner', require('./components/layout/Spinner.vue'))
-Vue.component('toast', require('./components/layout/Toast.vue'))
+Vue.component('navbar', require('./layout/Navbar.vue'))
+Vue.component('spinner', require('./layout/Spinner.vue'))
+Vue.component('toast', require('./layout/Toast.vue'))
 
 /**
  * Application

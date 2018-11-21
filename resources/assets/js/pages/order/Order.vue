@@ -1,6 +1,6 @@
 <template>
     <div class="container" id="reseller">
-        <h3>Orden</h3>
+        <h3>Ordenn</h3>
         <hr>
         <div class="row">
             <form class="form-horizontal row" role="form" @submit.prevent="calc">

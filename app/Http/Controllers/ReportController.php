@@ -341,6 +341,7 @@ public function salesStatus (Request $request) {
       }else{
 
         return ['status' => null];
+
       }
      
   }

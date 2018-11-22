@@ -92,7 +92,6 @@
           :pagination.sync="pagination"
           :loading="loading"
           class="elevation-1"
-
         >
           <template slot="headerCell" slot-scope="props">
             <v-tooltip bottom>
@@ -170,6 +169,7 @@
       id () {
         return this.$route.params.id
       },
+
     },
     methods: {
       ...mapActions([
@@ -278,6 +278,7 @@
       filterAuthor (val) {
         this.filters = this.$MultiFilters.updateFilters(this.filters, {soldBy: val})
       },
+
 
       /**
        * Handler when select a date on "From" date picker.

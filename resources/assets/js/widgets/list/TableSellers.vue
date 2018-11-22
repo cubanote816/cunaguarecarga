@@ -146,6 +146,7 @@
         </v-data-table>
   </v-flex>
   </v-layout>
+
 </template>
 
 <script>

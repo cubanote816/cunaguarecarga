@@ -20,7 +20,6 @@ class Users extends JsonResource
             'name' => $this->name,
             'email' => $this->email,
             'role' => $this->role,
-            
             'agreement' => new ContractResource($this->contract),
             // 'agreement' => $this->contracts,
         ];

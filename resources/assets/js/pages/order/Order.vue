@@ -4,7 +4,6 @@
       <v-flex xs12>
         <h3 class="flex my-2 text-xs-left primary--text">Ordenar</h3>
       </v-flex>
-      
       <v-flex xs12>
         <v-form ref="form" v-model="valid" lazy-validation @submit.prevent="calc" id="order-form">
           <v-container grid-list-md text-xs-center>
@@ -13,7 +12,7 @@
                 <v-text-field
                   v-model="form.phone"
                   :rules="phoneRules"
-                  label="Tel&eacute;fono"
+                  label="Telfono"
                   autofocus
                   required
                 ></v-text-field>
@@ -97,7 +96,7 @@
         saleItem: [],
         headers: [
           {
-            text: 'Tel&etilde;fono',
+            text: 'Telefono',
             align: 'left',
             value: 'phone',
             sortable: false
@@ -149,6 +148,7 @@
     methods: {
       ...mapActions([
         'managerUser',
+        'getContractor',
         'setOrder',
         'addToastMessage',
       ]),

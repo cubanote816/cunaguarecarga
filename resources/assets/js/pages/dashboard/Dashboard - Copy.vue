@@ -58,6 +58,7 @@
       Table20lastSales,
       DashboardBar,
       DashboardDoughnut
+
     },
 
     data () {

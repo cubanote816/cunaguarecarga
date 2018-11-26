@@ -9,8 +9,7 @@ const state = {
     fastest_run: {user: {}},
     longest_run: {user: {}},
   },
-  sales_last_30_days: {},
-  reports_detail: {},
+  sales_last_30_days: {}
 }
 const getters = {
   salesTotalSeller: state => {
@@ -56,6 +55,43 @@ const actions = {
         })
     })
   },
+<<<<<<< HEAD
+=======
+  statisticSales ({commit, dispatch}, id) {
+    commit('T_SALE')
+    commit('T_COMPLETE')
+    commit('T_PENDING')
+    commit('T_DENY')
+    commit('T_P_COMPLETE')
+    commit('T_P_PENDING')
+    commit('T_P_DENY')
+
+    return new Promise((resolve, reject) => {
+      axios.get(Config.apiPath + 'statistic', {id})
+        .then(
+          response => {
+            commit('T_SALE_OK', response.data.totalSales)
+            commit('T_COMPLETE_OK', response.data.totalComplete)
+            commit('T_P_COMPLETE_OK', response.data.totalPercentComplete)
+            commit('T_PENDING_OK', response.data.totalPending)
+            commit('T_P_PENDING_OK', response.data.totalPercentPending)
+            commit('T_DENY_OK', response.data.totalDeny)
+            commit('T_P_DENY_OK', response.data.totalPercentDeny)
+            resolve()
+          })
+        .catch(error => {
+          commit('T_SALE_FAIL')
+          commit('T_COMPLETE_FAIL')
+          commit('T_P_COMPLETE_FAIL')
+          commit('T_PENDING_FAIL')
+          commit('T_P_PENDING_FAIL')
+          commit('T_DENY_FAIL')
+          commit('T_P_DENY_FAIL')
+          reject(error.response.data)
+        })
+    })
+  }
+>>>>>>> dashboard first line
 
 }
 
@@ -68,6 +104,16 @@ const mutations = {
     'UPDATE_PROFILE',
     'LOAD_ADMIN_DASHBOARD',
     'SALES_LAST_30_DAYS',
+<<<<<<< HEAD
+=======
+    'T_SALE',
+    'T_COMPLETE',
+    'T_PENDING',
+    'T_DENY',
+    'T_P_COMPLETE',
+    'T_P_PENDING',
+    'T_P_DENY',
+>>>>>>> dashboard first line
     'statisticSales',
     'LOAD_USERS',
     'LOAD_USER',
@@ -107,6 +153,16 @@ const mutations = {
     'UPDATE_PROFILE_FAIL',
     'LOAD_ADMIN_DASHBOARD_FAIL',
     'SALES_LAST_30_DAYS_FAIL',
+<<<<<<< HEAD
+=======
+    'T_SALE_FAIL',
+    'T_COMPLETE_FAIL',
+    'T_PENDING_FAIL',
+    'T_DENY_FAIL',
+    'T_P_COMPLETE_FAIL',
+    'T_P_PENDING_FAIL',
+    'T_P_DENY_FAIL',
+>>>>>>> dashboard first line
     'LOAD_USERS_OK',
     'LOAD_USERS_FAIL',
     'LOAD_USER_OK',

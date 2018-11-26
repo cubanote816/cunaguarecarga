@@ -148,7 +148,6 @@
     methods: {
       ...mapActions([
         'managerUser',
-        'getContractor',
         'setOrder',
         'addToastMessage',
       ]),

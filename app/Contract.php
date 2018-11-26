@@ -21,7 +21,7 @@ class Contract extends Model
     // }
     public function user()
     {
-        return $this->belongsTo('App\User', 'hired');
+        return $this->belongsTo('App\User');
     }
 
 	/**

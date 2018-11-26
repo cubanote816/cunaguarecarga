@@ -3,9 +3,10 @@
 </template>
 
 <script>
+// import { debounce } from '../utils'
 import echarts from 'echarts'
 require('echarts/theme/macarons') // echarts theme
-import { debounce } from '@/utils'
+
 
 export default {
   props: {
@@ -30,7 +31,7 @@ export default {
       required: true
     }
   },
-  data() {
+  data () {
     return {
       chart: null,
       sidebarElm: null
@@ -39,28 +40,28 @@ export default {
   watch: {
     chartData: {
       deep: true,
-      handler(val) {
+      handler (val) {
         this.setOptions(val)
       }
     }
   },
-  mounted() {
+  mounted () {
     this.initChart()
-    if (this.autoResize) {
-      this.__resizeHandler = debounce(() => {
-        if (this.chart) {
-          this.chart.resize()
-        }
-      }, 100)
-      window.addEventListener('resize', this.__resizeHandler)
+    // if (this.autoResize) {
+      // this.__resizeHandler = debounce(() => {
+      //   if (this.chart) {
+      //     this.chart.resize()
+      //   }
+      // }, 100)
+      // window.addEventListener('resize', this.__resizeHandler)
     }
 
     // 监听侧边栏的变化
     this.sidebarElm = document.getElementsByClassName('sidebar-container')[0]
     this.sidebarElm && this.sidebarElm.addEventListener('transitionend', this.sidebarResizeHandler)
   },
-  beforeDestroy() {
-    if (!this.chart) {
+  beforeDestroy () {
+    if (! this.chart) {
       return
     }
     if (this.autoResize) {
@@ -73,12 +74,12 @@ export default {
     this.chart = null
   },
   methods: {
-    sidebarResizeHandler(e) {
+    sidebarResizeHandler (e) {
       if (e.propertyName === 'width') {
         this.__resizeHandler()
       }
     },
-    setOptions({ expectedData, actualData } = {}) {
+    setOptions ({ expectedData, actualData } = {}) {
       this.chart.setOption({
         xAxis: {
           data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
@@ -110,7 +111,8 @@ export default {
           data: ['expected', 'actual']
         },
         series: [{
-          name: 'expected', itemStyle: {
+          name: 'expected',
+          itemStyle: {
             normal: {
               color: '#FF005A',
               lineStyle: {
@@ -147,7 +149,7 @@ export default {
         }]
       })
     },
-    initChart() {
+    initChart () {
       this.chart = echarts.init(this.$el, 'macarons')
       this.setOptions(this.chartData)
     }

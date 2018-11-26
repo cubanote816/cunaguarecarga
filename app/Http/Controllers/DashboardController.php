@@ -234,7 +234,7 @@ class DashboardController extends Controller
         }
 
   }
-
+  
   // public function salesMonthly(Request $request){
   //   /** @var User $me */
   //       $me = auth()->user();

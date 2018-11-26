@@ -234,7 +234,6 @@ class ReportController extends Controller
         break;
       }
       case 'seller': {
-
         $history = (new Sale)->where('sold_by', '=', $me->id)->get();
 
         $result= new HistoryCollection($history);

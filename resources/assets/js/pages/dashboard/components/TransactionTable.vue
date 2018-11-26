@@ -2,12 +2,12 @@
   <el-table :data="list" style="width: 100%;padding-top: 15px;">
     <el-table-column label="Order_No" min-width="200">
       <template slot-scope="scope">
-        {{ scope.row.order_no | orderNoFilter }}
+        {{ scope.row.phone | orderNoFilter }}
       </template>
     </el-table-column>
     <el-table-column label="Price" width="195" align="center">
       <template slot-scope="scope">
-        ¥{{ scope.row.price | toThousandFilter }}
+        ¥{{ scope.row.cost | toThousandFilter }}
       </template>
     </el-table-column>
     <el-table-column label="Status" width="100" align="center">
@@ -19,34 +19,42 @@
 </template>
 
 <script>
-import { fetchList } from '@/api/transaction'
+
+import { mapActions, mapState } from 'vuex'
 
 export default {
   filters: {
-    statusFilter(status) {
+    statusFilter (status) {
       const statusMap = {
         success: 'success',
         pending: 'danger'
       }
       return statusMap[status]
     },
-    orderNoFilter(str) {
+    orderNoFilter (str) {
       return str.substring(0, 30)
     }
   },
-  data() {
+  data () {
     return {
       list: null
     }
   },
-  created() {
+  computed: {
+    ...mapState({
+      reports: state => state.report.reports,
+    }),
+  },
+  created () {
     this.fetchData()
   },
   methods: {
-    fetchData() {
-      fetchList().then(response => {
-        this.list = response.data.items.slice(0, 8)
-      })
+    ...mapActions([
+      // 'sellersList',
+      'reportsList',
+    ]),
+    fetchData () {
+      this.reportsList()
     }
   }
 }

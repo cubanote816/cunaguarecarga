@@ -48,6 +48,7 @@
   import DashboardDoughnut from './charts/DashboardDoughnut'
   import { mapActions, mapState, mapGetters } from 'vuex'
 
+
   export default {
 
     components: {
@@ -152,7 +153,6 @@
     }
 
   }
-
 </script>
 
 <style scoped>

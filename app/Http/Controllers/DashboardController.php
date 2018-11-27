@@ -124,7 +124,7 @@ class DashboardController extends Controller
                 $last30DaysCount = (new Sale)
                 ->where(function ($query) {
                   $query->where('status', '=', 'complete');
-                })  
+                }) 
                 ->whereDate('created_at', '>', Carbon::now()->subDays(30))
                 ->count();
                 return ['last30Days' => $last30Days, 'last30DaysSum' => $last30DaysCount];

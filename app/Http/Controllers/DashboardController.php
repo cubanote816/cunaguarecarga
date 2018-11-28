@@ -315,6 +315,7 @@ class DashboardController extends Controller
   //               // return $last30Days = $result;
   //               return ['last30Days' => $result, 'last30DaysSum' => $countTotal];
 
+
   //               break;
   //           }
   //           case 'reseller': {

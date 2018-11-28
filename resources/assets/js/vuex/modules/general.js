@@ -59,34 +59,16 @@ const actions = {
 =======
   statisticSales ({commit, dispatch}, id) {
     commit('T_SALE')
-    commit('T_COMPLETE')
-    commit('T_PENDING')
-    commit('T_DENY')
-    commit('T_P_COMPLETE')
-    commit('T_P_PENDING')
-    commit('T_P_DENY')
 
     return new Promise((resolve, reject) => {
       axios.get(Config.apiPath + 'statistic', {id})
         .then(
           response => {
-            commit('T_SALE_OK', response.data.totalSales)
-            commit('T_COMPLETE_OK', response.data.totalComplete)
-            commit('T_P_COMPLETE_OK', response.data.totalPercentComplete)
-            commit('T_PENDING_OK', response.data.totalPending)
-            commit('T_P_PENDING_OK', response.data.totalPercentPending)
-            commit('T_DENY_OK', response.data.totalDeny)
-            commit('T_P_DENY_OK', response.data.totalPercentDeny)
+            commit('T_SALE_OK', response.data)
             resolve()
           })
         .catch(error => {
           commit('T_SALE_FAIL')
-          commit('T_COMPLETE_FAIL')
-          commit('T_P_COMPLETE_FAIL')
-          commit('T_PENDING_FAIL')
-          commit('T_P_PENDING_FAIL')
-          commit('T_DENY_FAIL')
-          commit('T_P_DENY_FAIL')
           reject(error.response.data)
         })
     })

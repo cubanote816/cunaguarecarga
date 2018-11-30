@@ -55,25 +55,6 @@ const actions = {
         })
     })
   },
-<<<<<<< HEAD
-=======
-  statisticSales ({commit, dispatch}, id) {
-    commit('T_SALE')
-
-    return new Promise((resolve, reject) => {
-      axios.get(Config.apiPath + 'statistic', {id})
-        .then(
-          response => {
-            commit('T_SALE_OK', response.data)
-            resolve()
-          })
-        .catch(error => {
-          commit('T_SALE_FAIL')
-          reject(error.response.data)
-        })
-    })
-  }
->>>>>>> dashboard first line
 
 }
 
@@ -86,16 +67,6 @@ const mutations = {
     'UPDATE_PROFILE',
     'LOAD_ADMIN_DASHBOARD',
     'SALES_LAST_30_DAYS',
-<<<<<<< HEAD
-=======
-    'T_SALE',
-    'T_COMPLETE',
-    'T_PENDING',
-    'T_DENY',
-    'T_P_COMPLETE',
-    'T_P_PENDING',
-    'T_P_DENY',
->>>>>>> dashboard first line
     'statisticSales',
     'LOAD_USERS',
     'LOAD_USER',
@@ -135,16 +106,6 @@ const mutations = {
     'UPDATE_PROFILE_FAIL',
     'LOAD_ADMIN_DASHBOARD_FAIL',
     'SALES_LAST_30_DAYS_FAIL',
-<<<<<<< HEAD
-=======
-    'T_SALE_FAIL',
-    'T_COMPLETE_FAIL',
-    'T_PENDING_FAIL',
-    'T_DENY_FAIL',
-    'T_P_COMPLETE_FAIL',
-    'T_P_PENDING_FAIL',
-    'T_P_DENY_FAIL',
->>>>>>> dashboard first line
     'LOAD_USERS_OK',
     'LOAD_USERS_FAIL',
     'LOAD_USER_OK',

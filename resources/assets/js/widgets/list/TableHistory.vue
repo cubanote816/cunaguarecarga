@@ -39,6 +39,7 @@
                         slot="activator"
                         v-model="startDate"
                         label="Desde"
+
                         prepend-icon="event"
                         readonly
                 ></v-text-field>
@@ -68,6 +69,7 @@
                         slot="activator"
                         v-model="end_date"
                         label="Hasta"
+
                         prepend-icon="event"
                         readonly
                 ></v-text-field>
@@ -142,6 +144,7 @@
         startDate: null,
         end_date: null,
       },
+
       pagination: {
         sortBy: 'phone'
       },

@@ -27,6 +27,7 @@ Route::group(['prefix' => 'v1'], function () {
      */
      Route::get('json', function () {
         
+
 // foreach ($sellers as $seller) {
 //     $resellers = App\Contract::with('hired')
 //       ->where('contractor', $sellers->hired)
@@ -104,10 +105,12 @@ Route::group(['prefix' => 'v1'], function () {
 
         Route::get('reports', 'ReportController@reports');
         Route::get('history', 'ReportController@history');
+
         Route::get('last20sales', 'ReportController@last20');
         Route::get('salesstatus', 'ReportController@salesStatus');
         Route::get('statistic', 'ReportController@sales');
         Route::get('pay', 'ReportController@pay');
+
     });
 
 });

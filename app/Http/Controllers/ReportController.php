@@ -14,6 +14,7 @@ use App\Http\Resources\HistoryCollection;
 use App\Http\Resources\Role as RoleResource;
 use App\Http\Resources\RoleCollection;
 
+
 class ReportController extends Controller
 {
   private function getSellers($id)

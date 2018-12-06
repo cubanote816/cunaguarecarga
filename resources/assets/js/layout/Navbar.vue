@@ -45,6 +45,7 @@
       </v-toolbar-title>
       <v-spacer></v-spacer>
       <span class="hidden-sm-and-down">{{ me.name | capitalize }} nuestro equipo le saluda!</span>
+virification user status, reset password page
       <v-menu offset-y origin="center center" :nudge-bottom="10" transition="scale-transition">
         <v-btn icon large flat slot="activator">
           <v-avatar 

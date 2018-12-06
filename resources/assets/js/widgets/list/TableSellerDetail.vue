@@ -140,12 +140,20 @@
       selected: [],
       headers: [
         {
+<<<<<<< HEAD
           text: 'Telefono',
+=======
+          text: 'phones',
+>>>>>>> Sellers page, Login virification user status, reset password page
           align: 'left',
           value: 'phone'
         },
         {
+<<<<<<< HEAD
           text: 'Credito depositado',
+=======
+          text: 'Creito depositado',
+>>>>>>> Sellers page, Login virification user status, reset password page
           align: 'left',
           value: 'type'
         },

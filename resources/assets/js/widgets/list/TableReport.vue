@@ -107,7 +107,16 @@
             <td class="text-xs-left" colspan="100%">
               <strong>Total a pagar: </strong>{{reports_detail}} <strong>Total de recarga: </strong>{{reports.data.length}}
             </td>
+<<<<<<< HEAD
           </tr>
+=======
+            <td class="text-xs-left">
+              <strong>Total de recarga: </strong>{{reports.data.length}}
+            </td>
+            <td></td>
+            <td></td>
+            <td></td>
+>>>>>>> Sellers page, Login virification user status, reset password page
           </template>
         </v-data-table>
   </v-flex>

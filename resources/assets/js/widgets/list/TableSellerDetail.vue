@@ -141,19 +141,27 @@
       headers: [
         {
 <<<<<<< HEAD
+<<<<<<< HEAD
           text: 'Telefono',
 =======
           text: 'phones',
 >>>>>>> Sellers page, Login virification user status, reset password page
+=======
+          text: 'Telefono',
+>>>>>>> dashboard fixes and fixes general
           align: 'left',
           value: 'phone'
         },
         {
 <<<<<<< HEAD
+<<<<<<< HEAD
           text: 'Credito depositado',
 =======
           text: 'Creito depositado',
 >>>>>>> Sellers page, Login virification user status, reset password page
+=======
+          text: 'Credito depositado',
+>>>>>>> dashboard fixes and fixes general
           align: 'left',
           value: 'type'
         },

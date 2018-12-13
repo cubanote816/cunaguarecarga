@@ -150,7 +150,10 @@
         startDate: null,
         end_date: null,
       },
+<<<<<<< HEAD
 
+=======
+>>>>>>> dashboard fixes and fixes general
       pagination: {
         sortBy: 'phone'
       },

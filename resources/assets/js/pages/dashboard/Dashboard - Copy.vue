@@ -58,7 +58,10 @@
       Table20lastSales,
       DashboardBar,
       DashboardDoughnut
+<<<<<<< HEAD
 
+=======
+>>>>>>> dashboard fixes and fixes general
     },
 
     data () {
@@ -70,9 +73,26 @@
         last30DaysSum: 0,
         mySellers: 0,
         salesStatus: [],
+<<<<<<< HEAD
+=======
       }
     },
 
+    mounted () {
+      if (this.me.role === 'admin') {
+        this.agreement = 18
+        this.balance = 1000
+      } else {
+        this.agreement = this.me.agreement.agreement
+>>>>>>> dashboard fixes and fixes general
+      }
+      this.salesLast30Days()
+      this.loadSeller()
+      this.loadSalesStatus()
+      this.loadLast20Sales()
+    },
+
+<<<<<<< HEAD
     mounted () {
       if (this.me.role === 'admin') {
         this.agreement = 18
@@ -86,6 +106,8 @@
       this.loadLast20Sales()
     },
 
+=======
+>>>>>>> dashboard fixes and fixes general
     created () {
 
     },

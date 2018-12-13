@@ -1,5 +1,9 @@
 <template>
   <v-layout row wrap>
+<<<<<<< HEAD
+=======
+      <v-flex xs12>
+>>>>>>> dashboard fixes and fixes general
         <h3 class="flex text-xs-left primary--text">Reportes{{payTotal}}</h3>
       </v-flex>
       <v-flex xs12 sm4 md3 v-if="me.role !== 'seller'">
@@ -8,9 +12,12 @@
             :items="sellers_list"
             item-text="name"
             item-value="id"
+<<<<<<< HEAD
             :items="sellers_list.hired"
             item-text="name"
             item-value="user_id"
+=======
+>>>>>>> dashboard fixes and fixes general
             label="Vendedor"
           ></v-select>
       </v-flex>
@@ -106,6 +113,7 @@
             <tr>
             <td class="text-xs-left" colspan="100%">
               <strong>Total a pagar: </strong>{{reports_detail}} <strong>Total de recarga: </strong>{{reports.data.length}}
+<<<<<<< HEAD
             </td>
 <<<<<<< HEAD
           </tr>
@@ -117,6 +125,10 @@
             <td></td>
             <td></td>
 >>>>>>> Sellers page, Login virification user status, reset password page
+=======
+            </td>
+          </tr>
+>>>>>>> dashboard fixes and fixes general
           </template>
         </v-data-table>
   </v-flex>
@@ -202,6 +214,10 @@
       getColorByStatus (status) {
         return this.colors[status]
       },
+<<<<<<< HEAD
+=======
+
+>>>>>>> dashboard fixes and fixes general
       onLoadReport (page) {
         this.reportsList({...this.params})
       },

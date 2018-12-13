@@ -2,6 +2,7 @@
   <v-container grid-list-md>
     <v-layout row wrap>
 <<<<<<< HEAD
+<<<<<<< HEAD
       <v-flex xs12 sm6 md3 v-if="me.role == 'admin'">
         <card-balance :balance="balance" />
       </v-flex>
@@ -54,69 +55,29 @@
               </v-container>
             </v-card-text>
           </v-card>
+=======
+      <v-flex xs12 sm6 md3 v-if="me.role == 'admin'">
+        <card-balance :balance="balance" />
+>>>>>>> dashboard fixes and fixes general
       </v-flex>
 
-      <v-flex xs12 sm3>
-        <v-card>
-            <v-card-text class="pa-0" color="secondary">
-              <v-container class="pa-0">
-                <div class="layout row ma-0">
-                  <div class="sm4 xs4 py-3 flex">
-                    <div class="layout column ma-0 justify-center align-center bg-aqua ">
-                      <v-icon size="56px" color="indigo">mdi-cart-plus</v-icon>
-                    </div>
-                  </div>
-                  <div class="sm8 xs8 flex text-sm-center py-3">
-                    <div class="headline">{{sales_last_30_days.last30Days}} $ / {{sales_last_30_days.last30DaysSum}}</div>
-                  </div>
-                </div>
-                <div class="xs12 text-sm-right ">
-                  <span class="caption" style="padding-top: 5px; padding-right: 5px">Ventas Ultimos 30 Dias / Total Recarga</span>
-                </div>
-              </v-container>
-            </v-card-text>
-          </v-card>
+      <v-flex xs12 sm6 md3 v-if="me.role !== 'seller'">
+        <card-sales :last30Days="salesTotal" :last30DaysSum="salesUnitTotal" />
+      </v-flex>
+      <v-flex xs12 sm6 md6 v-else>
+        <card-sales :last30Days="salesTotal" :last30DaysSum="salesUnitTotal" />
       </v-flex>
 
-      <v-flex xs12 sm3 v-if="me.role != 'seller'">
-        <v-card>
-            <v-card-text class="pa-0">
-              <v-container class="pa-0">
-                <div class="layout row ma-0">
-                  <div class="sm5 xs5 py-3 flex">
-                    <div class="layout column ma-0 justify-center align-center bg-aqua">
-                      <v-icon size="56px" color="indigo">mdi-account-group</v-icon>
-                    </div>
-                  </div>
-                  <div class="sm7 xs7 flex text-sm-center py-3 ">
-                    <div class="headline">{{sellers_list.length}}</div>
-                    <span class="caption">Vendedores</span>
-                  </div>
-                </div>
-              </v-container>
-            </v-card-text>
-          </v-card>
-      </v-flex>
+      
 
-      <v-flex xs12 sm3>
-        <v-card>
-            <v-card-text class="pa-0">
-              <v-container class="pa-0">
-                <div class="layout row ma-0">
-                  <div class="sm5 xs5 py-3 flex">
-                    <div class="layout column ma-0 justify-center align-center bg-aqua">
-                      <v-icon size="56px" color="indigo">mdi-pen</v-icon>
-                    </div>
-                  </div>
-                  <div class="sm7 xs7 flex text-sm-center py-3 ">
-                    <div class="headline">{{agreement}} $</div>
-                    <span class="caption">Contrato</span>
-                  </div>
-                </div>
-              </v-container>
-            </v-card-text>
-          </v-card>
+      <v-flex xs12 sm6 md3 v-if="me.role !== 'seller'">
+        <card-seller :sellerCount="countSellers"/>
+        
       </v-flex>
+      <v-flex xs12 sm6 md3 v-if="me.role !== 'seller'">
+        <card-contract :agreement="agreement"/>
+      </v-flex>
+<<<<<<< HEAD
     <v-flex xs12></v-flex>
     <v-flex lg3 sm12 xs12 v-for="(item,index) in complete" :key="'c-complete'+index">
           <circle-statistic
@@ -165,6 +126,21 @@
           </circle-statistic>            
         </v-flex>
 >>>>>>> Dashborad fixed
+=======
+      <v-flex xs12 sm6 md6 v-else>
+        <card-contract :agreement="agreement"/>
+      </v-flex>
+    <v-flex xs12 sm4 v-if="status !== null">
+      <dashboard-doughnut :chart-data="datasetsfull"></dashboard-doughnut>
+    </v-flex>
+    <v-flex xs12 sm8>
+      <v-subheader>
+              Ultimas 20 recargas 
+            </v-subheader>
+      <table-20last-sales :data="last20_sales.data" />
+    </v-flex>
+
+>>>>>>> dashboard fixes and fixes general
     </v-layout>
   </v-container>
 </template>
@@ -178,7 +154,10 @@
   import DashboardBar from './charts/DashboardBar'
   import DashboardDoughnut from './charts/DashboardDoughnut'
   import { mapActions, mapState, mapGetters } from 'vuex'
+<<<<<<< HEAD
 
+=======
+>>>>>>> dashboard fixes and fixes general
 
   export default {
 
@@ -196,12 +175,16 @@
       return {
         errors: {},
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> dashboard fixes and fixes general
         balance: 0,
         agreement: 0.0000,
         last30Days: 0.0000,
         last30DaysSum: 0,
         mySellers: 0,
         salesStatus: [],
+<<<<<<< HEAD
 =======
         agreement: '',
         sales: '',
@@ -210,6 +193,8 @@
         deny: [],
         total: [],
 >>>>>>> Dashborad fixed
+=======
+>>>>>>> dashboard fixes and fixes general
       }
     },
 
@@ -222,6 +207,9 @@
       }
       this.salesLast30Days()
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> dashboard fixes and fixes general
       this.loadSeller()
       this.loadSellerNumber()
       this.loadSalesStatus()
@@ -230,6 +218,7 @@
     },
 
     created () {
+<<<<<<< HEAD
 =======
       this.statisticSales({id: this.me.id})
       this.$set(this, 'total', [
@@ -303,6 +292,9 @@
       // ])
       // this.sale = this.sales_last_30_days
 >>>>>>> Dashborad fixed
+=======
+
+>>>>>>> dashboard fixes and fixes general
     },
 
     computed: {

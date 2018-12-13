@@ -125,6 +125,7 @@ class DashboardController extends Controller
                 ->where(function ($query) {
                   $query->where('status', '=', 'complete');
                 }) 
+
                 ->whereDate('created_at', '>', Carbon::now()->subDays(30))
                 ->count();
                 return ['last30Days' => $last30Days, 'last30DaysSum' => $last30DaysCount];
@@ -308,12 +309,14 @@ class DashboardController extends Controller
   //               $reseller = $seles_reseller->sum('cost'); //obtengo resulatod de reseller
   //               $count = $seles_reseller->count(); //obtengo resulatod de reseller
 
+
   //               $result= $temp + $reseller;
   //               $countTotal= $temp2 + $count;
 
                
   //               // return $last30Days = $result;
   //               return ['last30Days' => $result, 'last30DaysSum' => $countTotal];
+
 
 
   //               break;

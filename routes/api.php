@@ -27,7 +27,6 @@ Route::group(['prefix' => 'v1'], function () {
      */
      Route::get('json', function () {
         
-
 // foreach ($sellers as $seller) {
 //     $resellers = App\Contract::with('hired')
 //       ->where('contractor', $sellers->hired)
@@ -86,7 +85,10 @@ Route::group(['prefix' => 'v1'], function () {
         Route::get('dashboard/data', 'DashboardController@data');
         Route::get('dashboard/admin-data', 'DashboardController@adminData');
         Route::get('dashboard/sales-last-30-days', 'DashboardController@salesLast30Days');
+<<<<<<< HEAD
 
+=======
+>>>>>>> dashboard fixes and fixes general
 
         Route::get('user/me', 'UserController@me');
         Route::post('user/status', 'UserController@status');
@@ -105,12 +107,18 @@ Route::group(['prefix' => 'v1'], function () {
 
         Route::get('reports', 'ReportController@reports');
         Route::get('history', 'ReportController@history');
+<<<<<<< HEAD
 
+=======
+>>>>>>> dashboard fixes and fixes general
         Route::get('last20sales', 'ReportController@last20');
         Route::get('salesstatus', 'ReportController@salesStatus');
         Route::get('statistic', 'ReportController@sales');
         Route::get('pay', 'ReportController@pay');
+<<<<<<< HEAD
 
+=======
+>>>>>>> dashboard fixes and fixes general
     });
 
 });

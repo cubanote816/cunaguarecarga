@@ -27,10 +27,10 @@ export default {
   },
   computed: {
     caption () {
-      return this.value + '% ' + this.subTitle
+      return this.value + '% ' + this.subTitle;
     }
   }
-}
+};
 </script>
 
 <style>

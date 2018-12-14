@@ -40,4 +40,29 @@ class ContractController extends Controller
         return ['contractor' => $list];
     }
 
+    /**
+     * Status user
+     *
+     * Status the specified user in storage.
+     *
+     * @param  \Illuminate\Http\Request $request
+     * @return array
+     */
+    public function updateAgreement(Request $request)
+    {
+        // $this->authorize($user);
+
+        
+        // Update user role only for admin
+        // if ($request->get('role') && $request->get('role') !== $user->role) {
+        //     if (auth()->user()->isSeller()) abort(401, 'Usted no esta autorizado ha modificar el estado de un vendedor');
+
+            $user= Contract::where('hired', $request->id)->first();
+            $user->agreement = $request->agreement;
+            $user->update();
+        // }
+
+    return ['user' => $user];
+    }
+
 }

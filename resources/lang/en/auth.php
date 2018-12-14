@@ -14,6 +14,9 @@ return [
     */
 
     'failed' => 'These credentials do not match our records.',
+    'inactive' => 'Your account is inactive or not verified',
+    'email_empty' => 'Your account is not registered',
+    'account_delete' => 'Your account was deleted or supended',
     'throttle' => 'Too many login attempts. Please try again in :seconds seconds.',
 
 ];

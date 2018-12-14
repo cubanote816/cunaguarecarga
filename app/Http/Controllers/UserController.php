@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\User;
+use App\Contract;
 use Illuminate\Http\Request;
+use App\Http\Resources\Users as UserResource;
 
 /**
  * Class UserController
@@ -23,7 +25,9 @@ class UserController extends Controller
      */
     public function me(Request $request)
     {
-        return $request->user();
+        // return $request->user();
+        $user = new UserResource($request->user());
+        return ['user' => $user];
     }
 
     /**
@@ -76,13 +80,13 @@ class UserController extends Controller
     {
         $this->authorize($user);
 
-        $this->validate($request, [
-            'name' => 'required|max:255',
-            'email' => 'required|email|max:255|unique:users,email,' . $user->id,
-            'password' => 'min:6|confirmed',
-        ]);
+        // $this->validate($request, [
+        //     'name' => 'required|max:255',
+        //     'email' => 'required|email|max:255|unique:users,email,' . $user->id,
+        //     'password' => 'min:6|confirmed',
+        // ]);
 
-        $user->fill($request->only('name', 'email'));
+        $user->fill($request->only('name'));
         if ($request->get('password')) {
             $user->password = bcrypt($request->get('password'));
         }
@@ -100,6 +104,18 @@ class UserController extends Controller
         return ['user' => $user];
     }
 
+    private function getSellers($id)
+      {
+        $sellers = Contract::with('hired')
+          ->where('contractor', $id)
+          ->whereHas("hired", function($q){
+            $q->where("deleted_at","=",null);
+          })
+          ->get();
+
+    // $sellers = new SellerIdCollection($result);
+        return $sellers;
+      }
     /**
      * Delete user
      *
@@ -112,8 +128,82 @@ class UserController extends Controller
     {
         $this->authorize($user);
 
-        $user->delete();
+        // $user->delete();
 
-        return ['message' => 'Success'];
+        // search the users that be seller or reseller of this user
+        $ids = array();
+        $user_seller = $this->getSellers($user->id);
+
+        switch ($user->role) {
+      
+          case 'manager': {
+            array_push($ids, $user->id);
+
+            foreach($user_seller as $reseller){
+              array_push($ids, $reseller->hired);
+              $sellersUser= $this->getSellers($reseller->hired);
+              foreach($sellersUser as $sellerUser){
+                array_push($ids, $sellerUser->hired);
+              }
+            } 
+
+            foreach ($ids as $id) {
+                $user_to_delete = User::findOrFail($id);
+
+                $user_to_delete->delete();
+            }
+            return ['message' => 'Success'];
+            break;
+          }
+          case 'reseller': {
+            array_push($ids, $user->id);
+
+            foreach($user_seller as $sellerUser){
+              array_push($ids, $sellerUser->hired);
+            }
+            foreach ($ids as $id) {
+                $user_to_delete = User::findOrFail($id);
+
+                $user_to_delete->delete();
+            }
+            
+            return ['message' => 'Success'];
+            break;
+          }
+          case 'seller': {
+                $user->delete();
+            // return ['reports' => $report];
+            return ['message' => 'Success'];
+            break;
+          }
     }
+    }
+
+/**
+     * Status user
+     *
+     * Status the specified user in storage.
+     *
+     * @param  \Illuminate\Http\Request $request
+     * @param User                      $user
+     * @return array
+     */
+    public function status(Request $request)
+    {
+        // $this->authorize($user);
+
+        
+        // Update user role only for admin
+        // if ($request->get('role') && $request->get('role') !== $user->role) {
+        //     if (auth()->user()->isSeller()) abort(401, 'Usted no esta autorizado ha modificar el estado de un vendedor');
+
+            $user= User::findOrFail($request->id);
+            $user->active = $request->active;
+            $user->update();
+        // }
+
+    return ['user' => $user];
+    }
+
+
 }

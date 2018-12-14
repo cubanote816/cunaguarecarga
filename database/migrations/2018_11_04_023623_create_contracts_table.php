@@ -24,6 +24,7 @@ class CreateContractsTable extends Migration
             $table->foreign('hired')->references('id')->on('users');
             $table->foreign('user_id')->references('id')->on('users');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

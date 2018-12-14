@@ -18,6 +18,7 @@ class CreateUsersTable extends Migration
             $table->string('name');
             $table->string('email')->unique();
             $table->string('password');
+            $table->string('avatar')->nullable();
             $table->enum('role', ['manager', 'admin', 'reseller', 'seller'])->default('seller');
             $table->boolean('active')->default(false);
             $table->string('activation_token');

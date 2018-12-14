@@ -15,11 +15,16 @@ class CreateSalesTable extends Migration
     {
         Schema::create('sales', function (Blueprint $table) {
           $table->increments('id');
+          $table->string('ref');
           $table->integer('type');
-          $table->integer('phone');
+          $table->string('phone');
           $table->decimal('cost','13','4');
+          $table->enum('status', ['complete', 'pending', 'deny'])->default('pending');
+          $table->boolean('paid')->default(false);
           $table->integer('sold_by')->unsigned();
           $table->foreign('sold_by')->references('id')->on('users');
+          $table->integer('hired_by')->unsigned()->nullable();
+          $table->foreign('hired_by')->references('id')->on('users');
           $table->timestamps();
         });
     }

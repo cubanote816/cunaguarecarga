@@ -14,6 +14,10 @@ class SellersCollection extends ResourceCollection
      */
     public function toArray($request)
     {
-        return parent::toArray($request);
+        return [
+        'data' => $this->collection->map(function ($item) use ($request) {
+            return (new Sellers($item))->toArray($request);
+        })
+    ];
     }
 }

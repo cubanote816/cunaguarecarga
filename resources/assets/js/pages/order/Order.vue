@@ -4,23 +4,21 @@
       <v-flex xs12>
         <h3 class="flex my-2 text-xs-left primary--text">Ordenar</h3>
       </v-flex>
-      <v-flex xs12>
-        <span class="text-xs-left">Costo: {{price}}</span>
-      </v-flex>
+      
       <v-flex xs12>
         <v-form ref="form" v-model="valid" lazy-validation @submit.prevent="calc" id="order-form">
           <v-container grid-list-md text-xs-center>
             <v-layout row wrap>
-              <v-flex xs5>
+              <v-flex xs12 md5>
                 <v-text-field
                   v-model="form.phone"
                   :rules="phoneRules"
-                  label="Telefono"
+                  label="Tel&eacute;fono"
                   autofocus
                   required
                 ></v-text-field>
               </v-flex>
-              <v-flex xs5>
+              <v-flex xs12 md5>
                 <v-select
                   v-model="form.credit"
                   :items="plans"
@@ -31,7 +29,7 @@
                   required
                 ></v-select>
               </v-flex>
-              <v-flex xs2>
+              <v-flex xs12 md2>
                 <v-btn color="primary" :disabled="! valid" type="submit" form="order-form">Agregar</v-btn>
               </v-flex>
             </v-layout>
@@ -64,7 +62,7 @@
           Sub total: {{subtotal}}
       </v-flex>
         <v-flex xs12 class="text-xs-right" v-if="items.length != 0">
-          <v-btn type="button" @click="save(items)">Confirmar</v-btn>
+          <v-btn color="success" type="button" @click="save(items)">Confirmar</v-btn>
         </v-flex>
     </v-layout>
   </v-container>    
@@ -80,10 +78,10 @@
         valid: true,
         phone: '',
         phoneRules: [
-          v => ! ! v || 'Numero de telefono es requerido.',
-          v => /^[0-9]*$/.test(v) || 'El numero de telefono debe ser valido.',
-          v => (v && v.length <= 8) || 'El numero de telefono debe tener 8 caracteres.',
-          v => (v && v.length >= 8) || 'El numero de telefono debe tener 8 caracteres.',
+          v => ! ! v || 'N&uacute;mero de tel&eacute;fono es requerido.',
+          v => /^[0-9]*$/.test(v) || 'El n&uacute;mero de tel&eacute;fono debe ser valido.',
+          v => (v && v.length <= 8) || 'El n&uacute;mero de tel&eacute;fono debe tener 8 caracteres.',
+          v => (v && v.length >= 8) || 'El n&uacute;mero de tel&eacute;fono debe tener 8 caracteres.',
         ],
         credit: '',
         creditRules: [
@@ -99,7 +97,7 @@
         saleItem: [],
         headers: [
           {
-            text: 'Telefono',
+            text: 'Tel&etilde;fono',
             align: 'left',
             value: 'phone',
             sortable: false
@@ -125,8 +123,11 @@
     mounted () {
       this.balance = 1000
       this.subtotal = 0.00
-      this.price = this.me.agreement[0].agreement
-
+      if (this.me.role === 'admin') {
+        this.price = 18
+      } else {
+        this.price = this.me.agreement.agreement
+      }
       // for (this.x in this.me.agreement) {
       //   this.price += this.me.agreement[x]
       //   this.agreement += this.me.agreement[x]
@@ -136,7 +137,6 @@
     computed: {
       ...mapState({
         me: state => state.auth.me,
-        contractor: state => state.contract.contractor,
       }),
       indexItems () {
         return this.items.map((item, index) => ({
@@ -149,7 +149,6 @@
     methods: {
       ...mapActions([
         'managerUser',
-        'getContractor',
         'setOrder',
         'addToastMessage',
       ]),

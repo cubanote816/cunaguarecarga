@@ -15,15 +15,5 @@ class DatabaseSeeder extends Seeder
     {
         factory(App\User::class)->states('admin')
             ->create(['name' => 'Admin', 'email' => 'admin@gmail.com']);
-
-        factory(App\User::class)->states('manager')
-            ->create(['name' => 'Manager', 'email' => 'manager@gmail.com']);
-
-        factory(App\User::class)->states('reseller')
-            ->create(['name' => 'Reseller', 'email' => 'reseller@gmail.com']);
-
-        factory(App\User::class)->states('seller')
-            ->create(['name' => 'Seller', 'email' => 'seller@gmail.com']);
-
     }
 }

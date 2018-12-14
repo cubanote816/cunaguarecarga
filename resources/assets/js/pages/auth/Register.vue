@@ -37,7 +37,7 @@
             </v-card-text>
             <v-card-actions>
               <v-spacer></v-spacer>
-               <v-btn color="primary" type="submit" form="register-form">Guardar</v-btn>
+               <v-btn color="primary" :disabled="$v.$invalid" type="submit" form="register-form">Guardar</v-btn>
             </v-card-actions>
           </form>
         </v-card>
@@ -47,19 +47,19 @@
 </template>
  
 <script>
-  // import { validationMixin } from 'vuelidate'
-  // import { required, email, numeric } from 'vuelidate/lib/validators'
+  import { validationMixin } from 'vuelidate'
+  import { required, email, decimal } from 'vuelidate/lib/validators'
   import { mapActions, mapState } from 'vuex'
 
   export default {
-    // mixins: [validationMixin],
-    // validations: {
-    //   form: {
-    //     email: { required, email },
-    //     role: { required },
-    //     agreement: { required, numeric },
-    //   }
-    // },
+    mixins: [validationMixin],
+    validations: {
+      form: {
+        email: { required, email },
+        role: { required },
+        agreement: { required, decimal },
+      }
+    },
     data () {
       return {
         form: {
@@ -67,35 +67,51 @@
           agreement: '',
           role: null,
         },
-        roleItems: [{ text: 'Administrador', value: 'manager' }, { text: 'Vendedor', value: 'seller' }],
+        roleItems: [],
 
         errors: {}
+      }
+    },
+    mounted () {
+      switch (this.me.role) {
+        case 'admin': {
+          this.roleItems = [{ text: 'Administrador', value: 'manager' }, { text: 'Vendedor', value: 'seller' }]
+          break
+        }
+        case 'manager': {
+          this.roleItems = [{ text: 'Revendedor', value: 'reseller' }, { text: 'Vendedor', value: 'seller' }]
+          break
+        }
+        case 'reseller': {
+          this.roleItems = [{ text: 'Vendedor', value: 'seller' }]
+          break
+        }
       }
     },
     computed: {
       ...mapState({
         me: state => state.auth.me,
       }),
-      // roleErrors () {
-      //   const errors = []
-      //   if (! this.$v.form.role.$dirty) return errors
-      //   ! this.$v.form.role.required && errors.push('Tipo de usuario es requerido.')
-      //   return errors
-      // },
-      // agreementErrors () {
-      //   const errors = []
-      //   if (! this.$v.form.agreement.$dirty) return errors
-      //   ! this.$v.form.agreement.numeric && errors.push('Entre un numero valido.')
-      //   ! this.$v.form.agreement.required && errors.push('Acuerdo requerido.')
-      //   return errors
-      // },
-      // emailErrors () {
-      //   const errors = []
-      //   if (! this.$v.form.email.$dirty) return errors
-      //   ! this.$v.form.email.email && errors.push('Debe ser un e-mail valido.')
-      //   ! this.$v.form.email.required && errors.push('E-mail es requerido.')
-      //   return errors
-      // }
+      roleErrors () {
+        const errors = []
+        if (! this.$v.form.role.$dirty) return errors
+        ! this.$v.form.role.required && errors.push('Tipo de usuario es requerido.')
+        return errors
+      },
+      agreementErrors () {
+        const errors = []
+        if (! this.$v.form.agreement.$dirty) return errors
+        ! this.$v.form.agreement.decimal && errors.push('Entre un numero valido.')
+        ! this.$v.form.agreement.required && errors.push('Acuerdo requerido.')
+        return errors
+      },
+      emailErrors () {
+        const errors = []
+        if (! this.$v.form.email.$dirty) return errors
+        ! this.$v.form.email.email && errors.push('Debe ser un e-mail valido.')
+        ! this.$v.form.email.required && errors.push('E-mail es requerido.')
+        return errors
+      }
     },
     methods: {
 
@@ -105,21 +121,25 @@
       ]),
 
       onSubmit () {
-        // this.$v.$touch()
-        this.errors = {}
-        this.register(this.form)
-          .then(() => {
-            this.form.email = ''
-            this.form.agreement = ''
-            this.form.role = ''
-            this.addToastMessage({
-              text: 'El vendedor fue creado, se le ha enviado un correo a ' + this.form.email + ' para su activacion!',
-              type: 'success'
+        this.$v.$touch()
+        if (this.$v.$invalid) {
+          alert('All fields are not valid')
+        } else {
+          this.errors = {}
+          this.register(this.form)
+            .then(() => {
+              this.form.email = null
+              this.form.agreement = null
+              this.form.role = null
+              this.addToastMessage({
+                text: 'El vendedor fue creado, se le ha enviado un correo a ' + this.form.email + ' para su activacion!',
+                type: 'success'
+              })
             })
-          })
-          .catch((data) => {
-            this.errors = data.errors || {}
-          })
+            .catch((data) => {
+              this.errors = data.errors || {}
+            })
+        }
       },
 
     }

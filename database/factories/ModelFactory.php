@@ -31,21 +31,3 @@ $factory->state(App\User::class, 'admin', function ($faker) {
         'role' => 'admin',
     ];
 });
-
-$factory->state(App\User::class, 'manager', function ($faker) {
-    return [
-        'role' => 'manager',
-    ];
-});
-
-$factory->state(App\User::class, 'reseller', function ($faker) {
-    return [
-        'role' => 'reseller',
-    ];
-});
-
-$factory->state(App\User::class, 'seller', function ($faker) {
-    return [
-        'role' => 'seller',
-    ];
-});

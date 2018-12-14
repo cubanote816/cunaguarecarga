@@ -79,6 +79,23 @@ const actions = {
     })
   },
 
+  statusUser ({commit, dispatch}, {id, active}) {
+    commit('STATUS_USER')
+
+    return new Promise((resolve, reject) => {
+      axios.post(Config.apiPath + 'user/status', {id, active})
+        .then(
+          response => {
+            commit('STATUS_USER_OK', response.data.user)
+            resolve()
+          })
+        .catch(error => {
+          commit('STATUS_USER_FAIL')
+          reject(error.response.data)
+        })
+    })
+  },
+
 }
 
 const mutations = {
@@ -92,6 +109,10 @@ const mutations = {
   },
 
   UPDATE_USER_OK (state, user) {
+    state.user = user
+  },
+
+  STATUS_USER_OK (state, user) {
     state.user = user
   },
 

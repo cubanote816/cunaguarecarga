@@ -7,18 +7,11 @@
 	    	<toast position="nw"></toast>
 
 	    	<navbar></navbar>
-	    	<sidebar></sidebar>
 	    	<v-content>
-		      <v-container fluid fill-height>
-		        <v-layout>
-		          <transition name="fade" mode="out-in">
-		      		<div class="page-wrapper">
-		        		<router-view style="padding-top: 60px"></router-view>
-		        	</div> 
-		      	</transition>
-		        </v-layout>
-		      </v-container>
+		      <transition name="fade" mode="out-in">
+		        	<router-view></router-view>
+		      </transition>
 		    </v-content>
-	  	</v-app>	
+	  	</v-app>
    </div>
 @endsection

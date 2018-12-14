@@ -1,69 +1,98 @@
 <template>
-  <v-container grid-list-md text-xs-center>
+  <v-container grid-list-md>
     <v-layout row wrap>
       <v-flex xs12>
-        <v-flex xs12 sm6 offset-sm3>
+        <v-flex xs12 sm6 offset-sm3  text-xs-center>
+          <div>
+            <v-icon
+            class="mdi-48px"
+          >
+           mdi-account-circle
+          </v-icon>
+          </div>
           <div class="grey--text text-xs-center">{{ user.name }}</div><br>
           <div class="grey--text text-xs-center">{{ user.email }}</div><br>
         </v-flex>
       </v-flex>
-      <v-flex xs12 sm3 offset-sm3>
-        <v-menu
-          :close-on-content-click="false"
-          v-model="dateFromMenu"
-          :nudge-right="40"
-          lazy
-          transition="scale-transition"
-          offset-y
-          full-width
-          min-width="290px"
-        >
-          <v-text-field
-            slot="activator"
-            v-model="dateFrom"
-            label="Desde"
-            prepend-icon="event"
-            readonly
-          ></v-text-field>
-          <v-date-picker v-model="dateFrom" @input="dateFromMenu = false"></v-date-picker>
-        </v-menu>
-      </v-flex>
-      <v-flex xs12 sm3>
-        <v-menu
-          :close-on-content-click="false"
-          v-model="dateToMenu"
-          :nudge-right="40"
-          lazy
-          transition="scale-transition"
-          offset-y
-          full-width
-          min-width="290px"
-        >
-          <v-text-field
-            slot="activator"
-            v-model="dateTo"
-            label="Hasta"
-            prepend-icon="event"
-            readonly
-          ></v-text-field>
-          <v-date-picker v-model="dateTo" @input="dateToMenu = false"></v-date-picker>
-        </v-menu>
-      </v-flex>
-      <v-spacer></v-spacer>
-      <v-flex>
-        <v-btn @click="onFilter">Buscar</v-btn>
-      </v-flex>
-      <v-flex>
-        <v-btn @click="onFilterClear">Reset</v-btn>
-      </v-flex>
+        <v-flex xs3 offset-xs3>
+            <v-text-field
+                    append-icon="search"
+                    label="Filter"
+                    single-line
+                    hide-details
+                    @input="filterSearch"
+            ></v-text-field>
+        </v-flex>
+
+        <v-flex xs3>
+
+            <v-menu
+                    ref="show_start_date"
+                    :close-on-content-click="false"
+                    v-model="show_start_date"
+                    :nudge-right="40"
+                    :return-value.sync="startDate"
+                    lazy
+                    transition="scale-transition"
+                    offset-y
+                    full-width
+                    min-width="290px"
+            >
+                <v-text-field
+                        slot="activator"
+                        v-model="startDate"
+                        label="From"
+                        prepend-icon="event"
+                        readonly
+                ></v-text-field>
+                <v-date-picker
+                        v-model="startDate"
+                        @input="filterStartDate"
+                ></v-date-picker>
+
+            </v-menu>
+
+        </v-flex>
+
+        <v-flex xs3>
+            <v-menu
+                    ref="show_end_date"
+                    :close-on-content-click="false"
+                    v-model="show_end_date"
+                    :nudge-right="40"
+                    :return-value.sync="end_date"
+                    lazy
+                    transition="scale-transition"
+                    offset-y
+                    full-width
+                    min-width="290px"
+            >
+                <v-text-field
+                        slot="activator"
+                        v-model="end_date"
+                        label="To"
+                        prepend-icon="event"
+                        readonly
+                ></v-text-field>
+                <v-date-picker
+                        v-model="end_date"
+                        @input="filterEndDate"
+                ></v-date-picker>
+
+            </v-menu>
+        </v-flex>
+
         
-      <v-spacer></v-spacer>
-      <v-flex xs12>
+        <v-flex xs12>
         <v-data-table
-          :headers="headers"
-          :items="seller_detail"
+        :headers="headers"
+          :items="seller_detail.data"
+          :search="filters"
+          :custom-filter="customFilter"
           :pagination.sync="pagination"
+          :loading="loading"
           class="elevation-1"
+
         >
           <template slot="headerCell" slot-scope="props">
             <v-tooltip bottom>
@@ -76,64 +105,58 @@
             </v-tooltip>
           </template>
           <template slot="items" slot-scope="props">
-            <td class="text-xs-left">{{ props.item.id }}</td>
-            <td class="text-xs-left">{{ props.item.phone }}</td>
-            <td class="text-xs-left">{{ props.item.type }}</td>
-            <td class="text-xs-left">{{ props.item.cost }}</td>
-            <td class="text-xs-left">{{ props.item.created_at }}</td>
+            <td>{{ props.item.phone }}</td>
+            <td>{{ props.item.type }}</td>
+            <td>{{ props.item.createdAt  | formatDate }}</td>
           </template>
           <template slot="pageText" slot-scope="props">
             Pagina {{ props.pageStart }} - {{ props.pageStop }} de {{ props.itemsLength }} 
           </template>
-          <template slot="footer">
-            <td class="text-xs-left">
-              <strong>Total a pagar: </strong>{{seller_detail_pay}}
-            </td>
-            <td class="text-xs-left">
-              <strong>Total de recarga: </strong>{{seller_detail.length}}
-            </td>
-            <td></td>
-            <td></td>
-            <td></td>
-          </template>
         </v-data-table>
-      </v-flex>
+  </v-flex>
     </v-layout>
   </v-container>
 </template>
 
-
-
 <script>
   import { mapActions, mapState } from 'vuex'
-
   export default {
-    name: 'Seller',
-    data () {
-      return {
-        dateFrom: '',
-        dateTo: '',
-        pagination: {},
-        headers: [
-          {
-            text: 'Id',
-            align: 'left',
-            sortable: false,
-            value: 'id'
-          },
-          { text: 'Telefono', value: 'phone' },
-          { text: 'Credito depositado', value: 'type' },
-          { text: 'Costo', value: 'cost' },
-          { text: 'Creado a', value: 'created_at' },
-        ],
-        date: new Date().toISOString().substr(0, 10),
-        dateFromMenu: false,
-        dateToMenu: false,
-        itemsSales: null
-      }
-    },
+    data: () => ({
+      show_start_date: false,
+      startDate: null,
+
+      show_end_date: false,
+      end_date: null,
+
+      filters: {
+        search: '',
+        soldBy: '',
+        startDate: null,
+        end_date: null,
+      },
+      pagination: {
+        sortBy: 'phone'
+      },
+      selected: [],
+      headers: [
+        {
+          text: 'Telefono',
+          align: 'left',
+          value: 'phone'
+        },
+        {
+          text: 'Credito depositado',
+          align: 'left',
+          value: 'type'
+        },
+        {
+          text: 'Realizada a',
+          value: 'createdAt'
+        },
+      ],
+    }),
     mounted () {
-      this.getSellerDetail(this.params)
+      this.getSellerDetail({id: this.id})
       this.loadUser(this.id)
       this.itemsSales = this.seller_detail.length
     },
@@ -147,44 +170,156 @@
       id () {
         return this.$route.params.id
       },
-      params () {
-        return {
-          id: this.$route.params.id,
-          page: this.seller_detail.current_page,
-          dateFrom: this.dateFrom,
-          dateTo: this.dateTo,
-        }
-      },
-      pages () {
-        if (this.pagination.rowsPerPage == null ||
-          this.pagination.totalItems == null
-        ) return 0
-
-        return Math.ceil(this.pagination.totalItems / this.pagination.rowsPerPage)
-      }
     },
     methods: {
       ...mapActions([
         'getSellerDetail',
         'loadUser',
       ]),
-      onLoadSales (page) {
-        this.getSellerDetail({...this.params, page})
+      customFilter (items, filters, filter, headers) {
+        // Init the filter class.
+        const cf = new this.$MultiFilters(items, filters, filter, headers)
+
+        // Use regular function(),
+        // arrow functions does not allow context binding.
+        // Register the global standard filter.
+        cf.registerFilter('search', function (searchWord, items) {
+          if (searchWord.trim() === '') return items
+
+          return items.filter(item => {
+            return item.phone.toLowerCase().includes(searchWord.toLowerCase())
+          }, searchWord)
+        })
+
+
+        // Use regular function(),
+        // arrow functions does not allow context binding.
+        // Register "soldBy" filter.
+        cf.registerFilter('soldBy', function (soldBy, items) {
+          // If the filter has not been applied yet
+          // just return all available items.
+          if (soldBy.trim() === '') return items
+
+          // Compare each item soldBy and just return the matching ones.
+          return items.filter(item => {
+            return item.soldBy.toLowerCase() === soldBy.toLowerCase()
+          }, soldBy)
+        })
+
+        // Use regular function(),
+        // arrow functions does not allow context binding.
+        // Register "startDate" filter.
+        cf.registerFilter('startDate', function (startDate, items) {
+          // If the filter has not been applied yet
+          // just return all available items.
+          if (startDate === null) return items
+
+          // Compare each item startDate and just return the matching ones.
+          return items.filter(item => {
+            return item.createdAt >= startDate
+          }, startDate)
+        })
+
+        // Use regular function(),
+        // arrow functions does not allow context binding.
+        // Register "end_date" filter.
+        cf.registerFilter('end_date', function (endDate, items) {
+          // If the filter has not been applied yet
+          // just return all available items.
+          if (endDate === null) return items
+
+          // Compare each item end_date and just return the matching ones.
+          return items.filter(item => {
+            return item.createdAt <= endDate
+          }, endDate)
+        })
+
+        // Its time to run all created filters.
+        // Will be executed in the order thay were defined.
+        return cf.runFilters()
       },
 
-      onFilter () {
-        this.getSellerDetail({...this.params, page: 1})
+
+      /**
+       * Toggle selected items with the master checkbox.
+       */
+      toggleAll () {
+        if (this.selected.length) {
+          this.selected = []
+        } else {
+          this.selected = this.rows.slice()
+        }
       },
 
-      onFilterClear () {
-        this.dateFrom = null
-        this.dateTo = null
-        this.getSellerDetail(this.params)
+      /**
+       * Column shorting.
+       *
+       * @param column
+       */
+      changeSort (column) {
+        if (this.pagination.sortBy === column) {
+          this.pagination.descending = ! this.pagination.descending
+        } else {
+          this.pagination.sortBy = column
+          this.pagination.descending = false
+        }
       },
+
+      /**
+       * Handler when user input something at the "Filter" text field.
+       */
+      filterSearch (val) {
+        this.filters = this.$MultiFilters.updateFilters(this.filters, {search: val})
+      },
+
+      /**
+       * Handler when user  select some author at the "Author" select.
+       */
+      filterAuthor (val) {
+        this.filters = this.$MultiFilters.updateFilters(this.filters, {soldBy: val})
+      },
+
+      /**
+       * Handler when select a date on "From" date picker.
+       */
+      filterStartDate (val) {
+        // Close the date picker.
+        this.$refs.show_start_date.save(val)
+
+        // Convert the value to a timestamp before saving it.
+        // const timestamp = new Date(val + 'T00:00:00Z').getTime()
+        this.filters = this.$MultiFilters.updateFilters(this.filters, {startDate: val})
+      },
+
+      /**
+       * Handler when select a date on "To" date picker.
+       */
+      filterEndDate (val) {
+        // Close the date picker.
+        this.$refs.show_end_date.save(val)
+
+        // Convert the value to a timestamp before saving it.
+        // const timestamp = new Date(val).toLocaleDateString('es-ES')
+        // const timestamp = new Date(val + 'T00:00:00Z').getTime()
+        this.filters = this.$MultiFilters.updateFilters(this.filters, {end_date: val})
+      },
+
+
     },
+
+    filters: {
+      /**
+       * Format a timestamp into a d/m/yyy (because spanish format).
+       *
+       * @param value
+       * @returns {string}
+       */
+      formatDate: function (value) {
+        if (! value) return ''
+        return new Date(value).toLocaleDateString('es-ES')
+      }
+    }
+
+
   }
 </script>
-
-<style scoped>
-
-</style>

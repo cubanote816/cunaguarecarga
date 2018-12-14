@@ -6,7 +6,7 @@
     fixed
     app
   >
-    <v-list dense>
+    <v-list dense v-if="me.role != 'seller'">
       <v-list-tile v-for="item in items" :key="item.text" :to="item.href" active-class="active">
         <v-list-tile-action>
           <v-icon>{{item.icon}}</v-icon>
@@ -18,7 +18,18 @@
         </v-list-tile-content>
       </v-list-tile>
     </v-list>
-
+    <v-list dense v-else>
+      <v-list-tile v-for="item in itemsSeller" :key="item.text" :to="item.href" active-class="active">
+        <v-list-tile-action>
+          <v-icon>{{item.icon}}</v-icon>
+        </v-list-tile-action>
+        <v-list-tile-content>
+          <v-list-tile-title>
+            {{item.text}}
+          </v-list-tile-title>
+        </v-list-tile-content>
+      </v-list-tile>
+    </v-list>
 
   </v-navigation-drawer>
       <v-toolbar
@@ -30,14 +41,17 @@
     >
       <v-toolbar-title style="width: 300px" class="ml-0 pl-3">
         <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
-        <span class="hidden-sm-and-down">Cunagua Recarga</span>
+        <span>Cunagua Recarga</span>
       </v-toolbar-title>
       <v-spacer></v-spacer>
-      <span>{{me.name}} nuestro equipo de recarga te saluda!</span>
+      <span class="hidden-sm-and-down">{{ me.name | capitalize }} nuestro equipo le saluda!</span>
       <v-menu offset-y origin="center center" :nudge-bottom="10" transition="scale-transition">
         <v-btn icon large flat slot="activator">
-          <v-avatar size="30px">
-            <img src="images/avatar//man_4.jpg" :alt="me.name"/>
+          <v-avatar 
+            size="30px" 
+            color="grey lighten-4"
+          >
+            <img src="images/avatar//avatar.png" :alt="me.name"/>
           </v-avatar>
         </v-btn>
         <v-list class="pa-0">
@@ -65,23 +79,32 @@
       drawer: null,
       menuAvatar: [
         {
-          icon: 'account_circle',
+          icon: 'mdi-account-circle',
           href: '/profile',
           title: 'Perfil',
         },
         {
-          icon: 'fullscreen_exit',
+          icon: 'mdi-logout',
           href: '/logout',
           title: 'Logout',
         }
       ],
       items: [
-        { icon: 'contacts', text: 'Dashboard', href: '/dashboard' },
-        { icon: 'history', text: 'Ordenes', href: '/order' },
-        { icon: 'content_copy', text: 'Reportes', href: '/reports' },
-        { icon: 'content_copy', text: 'Vendedores', href: '/seller' },
-        { icon: 'settings', text: 'Perfil', href: '/profile' },
-        { icon: 'chat_bubble', text: 'Log out', href: '/logout' },
+        { icon: 'mdi-view-dashboard', text: 'Dashboard', href: '/dashboard' },
+        { icon: 'mdi-shopping', text: 'Ordenes', href: '/order' },
+        { icon: 'mdi-history', text: 'Historial', href: '/history' },
+        { icon: 'mdi-chart-line-variant', text: 'Reportes', href: '/reports' },
+        { icon: 'mdi-account-group', text: 'Vendedores', href: '/seller' },
+        { icon: 'mdi-account-settings', text: 'Perfil', href: '/profile' },
+        { icon: 'mdi-logout', text: 'Log out', href: '/logout' },
+      ],
+      itemsSeller: [
+        { icon: 'mdi-view-dashboard', text: 'Dashboard', href: '/dashboard' },
+        { icon: 'mdi-shopping', text: 'Ordenes', href: '/order' },
+        { icon: 'mdi-history', text: 'Historial', href: '/history' },
+        { icon: 'mdi-chart-line-variant', text: 'Reportes', href: '/reports' },
+        { icon: 'mdi-account-settings', text: 'Perfil', href: '/profile' },
+        { icon: 'mdi-logout', text: 'Log out', href: '/logout' },
       ]
     }),
     props: {
@@ -106,5 +129,12 @@
 
     methods: {
     },
+    filters: {
+      capitalize: function (value) {
+        if (! value) return ''
+        value = value.toString()
+        return value.charAt(0).toUpperCase() + value.slice(1)
+      }
+    }
   }
 </script>

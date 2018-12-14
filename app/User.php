@@ -50,7 +50,7 @@ class User extends Model implements
         parent::boot();
 
         static::deleting(function($user) {
-            $user->entries()->delete();
+            $user->contract()->delete();
         });
     }
 
@@ -86,7 +86,7 @@ public function owner()
 	/**
      * contractor has many Hired
      */
-    public function contractor()
+    public function contractors()
     {
         return $this->belongsToMany(User::class, 'contracts', 'hired', 'contractor');
     }
@@ -94,9 +94,13 @@ public function owner()
 	/**
      * Usear has many Contract
      */
-    public function contracts()
+    // public function contracts()
+    // {
+    //     return $this->hasMany(Contract::class);
+    // }
+    public function contract()
     {
-        return $this->hasMany(Contract::class);
+        return $this->hasOne('App\Contract', 'hired');
     }
 
     /* ========================================================================= *\

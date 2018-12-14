@@ -22,7 +22,7 @@ const actions = {
       axios.get(Config.apiPath + 'user/me')
         .then(
           response => {
-            commit('CHECK_LOGIN_OK', response.data)
+            commit('CHECK_LOGIN_OK', response.data.user)
             resolve()
           })
         .catch(error => {

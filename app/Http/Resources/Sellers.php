@@ -15,11 +15,12 @@ class Sellers extends JsonResource
     public function toArray($request)
     {
         return [
-            'id' => $this->id,
-            'name' => $this->name,
-            'email' => $this->email,
-            'active' => $this->active,
-            'owner' => $this->owner,
+            'id' => $this->resource->user->id,
+            'name' => $this->resource->user->name,
+            'email' => $this->resource->user->email,
+            'role' => $this->resource->user->role,
+            'active' => $this->resource->user->active == 1 ? true : false,
+            'agreement' => $this->resource->agreement,
         ];
     }
 }

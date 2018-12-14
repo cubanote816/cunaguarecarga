@@ -4,6 +4,7 @@ import * as Config from '../../config'
 const state = {
   contracts: {},
   contractor: {},
+  agreement: {},
 }
 
 const actions = {
@@ -40,6 +41,23 @@ const actions = {
         })
     })
   },
+
+  updateAgreement ({commit, dispatch}, id) {
+    commit('AGREEMENT')
+
+    return new Promise((resolve, reject) => {
+      axios.post(Config.apiPath + 'contract/agreement', id)
+        .then(
+          response => {
+            commit('AGREEMENT_OK', response.data.user)
+            resolve()
+          })
+        .catch(error => {
+          commit('AGREEMENT_FAIL')
+          reject(error.response.data)
+        })
+    })
+  },
 }
 
 const mutations = {
@@ -49,6 +67,10 @@ const mutations = {
 
   CONTRACTOR_OK (state, contractor) {
     state.contractor = contractor
+  },
+
+  AGREEMENT_OK (state, agreement) {
+    state.agreement = agreement
   },
 
 }

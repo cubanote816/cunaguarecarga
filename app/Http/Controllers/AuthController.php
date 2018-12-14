@@ -12,6 +12,8 @@ use App\Http\Requests\RegisterRequest;
 use Lang;
 use Validator;
 use App\Notifications\RegisterActivate;
+use App\Http\Resources\Users as UserResource;
+use App\Http\Resources\UsersCollection;
 
 /**
  * Class AuthController
@@ -45,13 +47,50 @@ class AuthController extends Controller
             abort(429, Lang::get('auth.throttle', ['seconds' => $seconds]));
         }
 
+        $check_email = \App\User::where('email', '=', $request->email)
+                          ->get();
+
+        if ($check_email->isEmpty()) {
+            // The user is doesnt exist
+            abort(401, Lang::get('auth.email_empty'));
+
+            // return redirect("/login")
+            //     ->withInput($request->only('email', 'remember'))
+            //     ->withWarning('Your account is not registered');
+        }
+
+        $check_delete = \App\User::where('deleted_at', '=', null)
+                          ->get();
+
+        if ($check_delete->isEmpty()) {
+            // The user is doesnt exist
+            abort(401, Lang::get('auth.account_delete'));
+
+            // return redirect("/login")
+            //     ->withInput($request->only('email', 'remember'))
+            //     ->withWarning('Your account is not registered');
+        }
+
+        $check_active = \App\User::where('email', '=', $request->email)
+                          ->where('active', '=', 1)
+                          ->get();
+        if ($check_active->isEmpty()) {
+            // The user is exist but inactive
+            // return redirect()->route('auth.login')
+            //     ->withInput($request->only('email', 'remember'))
+            //     ->withWarning('Your account is inactive or not verified');
+            abort(401, Lang::get('auth.inactive'));
+
+        }
+// finish checkout
         if ($this->attemptLogin($request)) {
             $this->clearLoginAttempts($request);
 
             /** @var User $user */
             $user = $this->guard()->user();
-
-            return ['user' => $user, 'access_token' => $user->makeApiToken()];
+            $user_full = new UserResource($user);
+            
+            return ['user' => $user_full, 'access_token' => $user->makeApiToken(), 'email' => $check_active];
         }
 
         // If the login attempt was unsuccessful we will increment the number of attempts
@@ -70,7 +109,7 @@ class AuthController extends Controller
      * @param  \Illuminate\Http\Request $request
      * @return array
      */
-    public function register(RegisterRequest $request)
+    public function register(Request $request)
     {
         //$this->validator($request->all())->validate();
         $me = $request->user()->id;
@@ -93,18 +132,20 @@ class AuthController extends Controller
     public function registerActivate($token)
     {
         $user = User::where('activation_token', $token)->first();
-        // if (!$user) {
-        //     return response()->json(['message' => 'El token de activación es inválido '.$token], 404);
-        // }
+        if (!$user) {
+            return redirect("/login")->with('message', 'El token de activación es inválido '.$token);
+            // return response()->json(['message' => 'El token de activación es inválido '.$token], 404);
+        }
 
         return ['user' => $user, 'token'=> $token];
     }
 
-    public function registerFinish(ConfirmationMember $request, $id)
+    public function registerFinish(Request $request, $id)
     {
-      event(new Registered($user = $this->update($id, $request->all())));
+        event(new Registered($user = $this->update($id, $request->all())));
+        $user_ready= new UserResource($user);
 
-      return ['user' => $user, 'access_token' => $user->makeApiToken()];
+      return ['user' => $user_ready, 'access_token' => $user->makeApiToken()];
     }
 
     /**

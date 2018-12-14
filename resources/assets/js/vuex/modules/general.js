@@ -9,7 +9,6 @@ const state = {
     fastest_run: {user: {}},
     longest_run: {user: {}},
   },
-<<<<<<< HEAD
   sales_last_30_days: {}
 }
 const getters = {
@@ -17,16 +16,7 @@ const getters = {
     return state.sales_last_30_days
   }
 }
-=======
-  sales_last_30_days: {},
-  reports_detail: {},
-}
-const getters = {
-  salesTotalSeller: state => {
-    return state.sales_last_30_days
-  }
-}
->>>>>>> dashboard fixes and fixes general
+
 const actions = {
 
   stopLoading ({commit}) {

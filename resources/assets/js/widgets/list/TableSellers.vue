@@ -4,15 +4,7 @@
         <h3 class="flex text-xs-left primary--text">Vendedores</h3>
       </v-flex>
     <v-toolbar flat color="white">
-<<<<<<< HEAD
-<<<<<<< HEAD
       <v-toolbar-title class="xs12 sm4">
-=======
-      <v-toolbar-title>
->>>>>>> Sellers page, Login virification user status, reset password page
-=======
-      <v-toolbar-title class="xs12 sm4">
->>>>>>> dashboard fixes and fixes general
       <v-text-field
         v-model="search"
         append-icon="search"
@@ -22,15 +14,7 @@
       ></v-text-field>
     </v-toolbar-title>
       <v-divider
-<<<<<<< HEAD
-<<<<<<< HEAD
         class="mx-2 hidden-xs-and-down"
-=======
-        class="mx-2"
->>>>>>> Sellers page, Login virification user status, reset password page
-=======
-        class="mx-2 hidden-xs-and-down"
->>>>>>> dashboard fixes and fixes general
         inset
         vertical
       ></v-divider>
@@ -131,21 +115,9 @@
             </v-tooltip>
           </template>
           <template slot="items" slot-scope="props">
-<<<<<<< HEAD
-<<<<<<< HEAD
             <td class="text-xs-left" style="width: 25%;">{{ props.item.name }}</td>
         <td class="text-xs-left hidden-sm-and-down" style="width: 25%;">{{ props.item.email }}</td>
         <td class="text-xs-center" style="width: 10%;">
-=======
-            <td>{{ props.item.name }}</td>
-        <td class="text-xs-left hidden-sm-and-down">{{ props.item.email }}</td>
-        <td class="text-xs-center">
->>>>>>> Sellers page, Login virification user status, reset password page
-=======
-            <td class="text-xs-left" style="width: 25%;">{{ props.item.name }}</td>
-        <td class="text-xs-left hidden-sm-and-down" style="width: 25%;">{{ props.item.email }}</td>
-        <td class="text-xs-center" style="width: 10%;">
->>>>>>> dashboard fixes and fixes general
           <toggle-button
             :value="props.item.active"
             :sync="true"
@@ -154,10 +126,6 @@
             :width="70"
             @change="updateItemValue(props.item.id, $event.value)"/>
        </td>
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> dashboard fixes and fixes general
         <td class="text-xs-center hidden-sm-and-down" style="width: 10%;">{{ props.item.role }}</td>
         <td class="text-xs-center" style="width: 10%;">{{ props.item.agreement }}</td>
         <td class="justify-center layout px-0">
@@ -170,34 +138,6 @@
           <v-btn @click="onDelete(props.item, props.item.id, props.item.name)" flat icon color="red">
                   <v-icon>mdi-delete-empty</v-icon>
                 </v-btn>
-<<<<<<< HEAD
-=======
-        <td class="text-xs-center hidden-sm-and-down">{{ props.item.role }}</td>
-        <td class="text-xs-center">{{ props.item.agreement }}</td>
-        <td class="justify-center layout" style="width: 70px;">
-          <v-icon
-            small
-            class="mr-2"
-            @click="viewItem(props.item.id)"
-          >
-            mdi-eye
-          </v-icon>
-          <v-icon
-            small
-            class="mr-2"
-            @click="editItem(props.item)"
-          >
-           mdi-square-edit-outline
-          </v-icon>
-          <v-icon
-            small
-            @click="onDelete(props.item, props.item.id, props.item.name)"
-          >
-            mdi-delete-empty
-          </v-icon>
->>>>>>> Sellers page, Login virification user status, reset password page
-=======
->>>>>>> dashboard fixes and fixes general
         </td>
           </template>
           <template slot="pageText" slot-scope="props">
@@ -206,10 +146,6 @@
         </v-data-table>
   </v-flex>
   </v-layout>
-<<<<<<< HEAD
-
-=======
->>>>>>> Sellers page, Login virification user status, reset password page
 </template>
 
 <script>
@@ -237,15 +173,7 @@
       selected: [],
       headers: [
         { text: 'Nombre', value: 'hired.name' },
-<<<<<<< HEAD
-<<<<<<< HEAD
         { text: 'Email', value: 'hired.email', class: 'hidden-sm-and-down' },
-=======
-        { text: 'Email', value: 'hired.email', align: 'left', class: 'hidden-sm-and-down' },
->>>>>>> Sellers page, Login virification user status, reset password page
-=======
-        { text: 'Email', value: 'hired.email', class: 'hidden-sm-and-down' },
->>>>>>> dashboard fixes and fixes general
         { text: 'Estado', value: 'hired.status', align: 'center' },
         { text: 'Tipo de vendedor', value: 'role', align: 'center', class: 'hidden-sm-and-down' },
         { text: 'Acuerdo', value: 'agreement', align: 'center' },
@@ -413,15 +341,7 @@
 
       save () {
         this.$v.$touch()
-<<<<<<< HEAD
-<<<<<<< HEAD
         // Object.assign(this.sellers.data[this.editedIndex], this.form) // no funciona dentro del metodo
-=======
-        Object.assign(this.sellers.data[this.editedIndex], this.form) // no funciona dentro del metodo
->>>>>>> Sellers page, Login virification user status, reset password page
-=======
-        // Object.assign(this.sellers.data[this.editedIndex], this.form) // no funciona dentro del metodo
->>>>>>> dashboard fixes and fixes general
         if (this.editedIndex > - 1) {
           this.loading = true
           if (this.$v.$invalid) {

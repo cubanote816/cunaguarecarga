@@ -4,10 +4,6 @@
       <v-flex xs12>
         <h3 class="flex my-2 text-xs-left primary--text">Ordenar</h3>
       </v-flex>
-<<<<<<< HEAD
-=======
-      
->>>>>>> dashboard fixes and fixes general
       <v-flex xs12>
         <v-form ref="form" v-model="valid" lazy-validation @submit.prevent="calc" id="order-form">
           <v-container grid-list-md text-xs-center>
@@ -16,11 +12,7 @@
                 <v-text-field
                   v-model="form.phone"
                   :rules="phoneRules"
-<<<<<<< HEAD
-                  label="Telfono"
-=======
-                  label="Tel&eacute;fono"
->>>>>>> dashboard fixes and fixes general
+                  label="Teléfono"
                   autofocus
                   required
                 ></v-text-field>

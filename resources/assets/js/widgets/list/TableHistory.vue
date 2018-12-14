@@ -39,10 +39,6 @@
                         slot="activator"
                         v-model="startDate"
                         label="Desde"
-<<<<<<< HEAD
-
-=======
->>>>>>> Sellers page, Login virification user status, reset password page
                         prepend-icon="event"
                         readonly
                 ></v-text-field>
@@ -72,10 +68,6 @@
                         slot="activator"
                         v-model="end_date"
                         label="Hasta"
-<<<<<<< HEAD
-
-=======
->>>>>>> Sellers page, Login virification user status, reset password page
                         prepend-icon="event"
                         readonly
                 ></v-text-field>
@@ -150,10 +142,6 @@
         startDate: null,
         end_date: null,
       },
-<<<<<<< HEAD
-
-=======
->>>>>>> dashboard fixes and fixes general
       pagination: {
         sortBy: 'phone'
       },

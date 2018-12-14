@@ -170,10 +170,6 @@
       id () {
         return this.$route.params.id
       },
-<<<<<<< HEAD
-
-=======
->>>>>>> Sellers page, Login virification user status, reset password page
     },
     methods: {
       ...mapActions([
@@ -267,7 +263,6 @@
           this.pagination.sortBy = column
           this.pagination.descending = false
         }
-<<<<<<< HEAD
       },
 
       /**
@@ -309,52 +304,6 @@
         // const timestamp = new Date(val + 'T00:00:00Z').getTime()
         this.filters = this.$MultiFilters.updateFilters(this.filters, {end_date: val})
       },
-
-
-=======
-      },
-
-      /**
-       * Handler when user input something at the "Filter" text field.
-       */
-      filterSearch (val) {
-        this.filters = this.$MultiFilters.updateFilters(this.filters, {search: val})
-      },
-
-      /**
-       * Handler when user  select some author at the "Author" select.
-       */
-      filterAuthor (val) {
-        this.filters = this.$MultiFilters.updateFilters(this.filters, {soldBy: val})
-      },
-
-      /**
-       * Handler when select a date on "From" date picker.
-       */
-      filterStartDate (val) {
-        // Close the date picker.
-        this.$refs.show_start_date.save(val)
-
-        // Convert the value to a timestamp before saving it.
-        // const timestamp = new Date(val + 'T00:00:00Z').getTime()
-        this.filters = this.$MultiFilters.updateFilters(this.filters, {startDate: val})
-      },
-
-      /**
-       * Handler when select a date on "To" date picker.
-       */
-      filterEndDate (val) {
-        // Close the date picker.
-        this.$refs.show_end_date.save(val)
-
-        // Convert the value to a timestamp before saving it.
-        // const timestamp = new Date(val).toLocaleDateString('es-ES')
-        // const timestamp = new Date(val + 'T00:00:00Z').getTime()
-        this.filters = this.$MultiFilters.updateFilters(this.filters, {end_date: val})
-      },
-
-
->>>>>>> Sellers page, Login virification user status, reset password page
     },
 
     filters: {
@@ -369,12 +318,5 @@
         return new Date(value).toLocaleDateString('es-ES')
       }
     }
-<<<<<<< HEAD
-
-
-=======
-
-
->>>>>>> Sellers page, Login virification user status, reset password page
   }
 </script>

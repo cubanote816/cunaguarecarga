@@ -3,6 +3,7 @@
     <v-layout row wrap>
       <v-flex xs12>
         <h3 class="flex my-2 text-xs-left primary--text">Ordenar</h3>
+        <span class="flex my-2 text-xs-left order-warning">Si deseas realizar más de una recarga al mismo número, debes realizar una por operación.</span>
       </v-flex>
       <v-flex xs12>
         <v-form ref="form" v-model="valid" lazy-validation @submit.prevent="calc" id="order-form">
@@ -158,30 +159,54 @@
       },
       calc () {
         if (this.$refs.form.validate()) {
-          this.errors = {}
-          this.form.cost = (this.price / 2) * this.form.credit
-          this.subtotal = this.form.cost + this.subtotal
-          switch (this.form.credit) {
-            case 1.5: {
-              this.form.credit = '15'
-              break
-            }
-            case 2: {
-              this.form.credit = '20'
-              break
-            }
-            case 3: {
-              this.form.credit = '30'
-              break
-            }
-            case 5: {
-              this.form.credit = '50'
-              break
-            }
+          let item = this.items.map((item, index) => ({
+            id: index,
+            ...item
+          }))
+          // console.log('Phone: ' + item.phone.includes(12345678))
+          let check
+          for (var i = 0; i < item.length; i++) {
+            check = item[i].phone.includes(this.form.phone)
           }
-          this.items.push({ credit: this.form.credit, phone: this.form.phone, cost: this.form.cost }) // what to push unto the rows array?
-          this.form.phone = ''
-          this.form.credit = null
+          if (check) {
+            this.$swal({
+              title: 'El número ya ha sido agregado',
+              text: 'Si deseas realizar más de una recarga al mismo número debes realizar una por operación',
+              type: 'warning',
+              showCancelButton: true,
+              showConfirmButton: false,
+              confirmButtonColor: '#3085d6',
+              cancelButtonColor: '#3085d6',
+              cancelButtonText: 'Entendido',
+              buttonsStyling: true
+            })
+          } else {
+            this.errors = {}
+            this.form.cost = (this.price / 2) * this.form.credit
+            this.subtotal = this.form.cost + this.subtotal
+            switch (this.form.credit) {
+              case 1.5: {
+                this.form.credit = '15'
+                break
+              }
+              case 2: {
+                this.form.credit = '20'
+                break
+              }
+              case 3: {
+                this.form.credit = '30'
+                break
+              }
+              case 5: {
+                this.form.credit = '50'
+                break
+              }
+            }
+
+            this.items.push({ credit: this.form.credit, phone: this.form.phone, cost: this.form.cost }) // what to push unto the rows array?
+            this.form.phone = ''
+            this.form.credit = null
+          }
         }
       },
       save (items) {
@@ -201,3 +226,8 @@
     }
   }
 </script>
+<style scoped="">
+  .order-warning {
+    color: #8a8883;
+  }
+</style>

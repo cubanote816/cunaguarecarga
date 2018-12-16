@@ -91,18 +91,15 @@
           :loading="loading"
           class="elevation-1"
             >
-                <template slot="headers" slot-scope="props">
-                    <tr>
-                        <th
-                                v-for="header in props.headers"
-                                :key="header.text"
-                                :class="['column sortable', pagination.descending ? 'desc' : 'asc', header.value === pagination.sortBy ? 'active' : '']"
-                                @click="changeSort(header.value)"
-                        >
-                            <v-icon small>arrow_upward</v-icon>
-                            {{ header.text }}
-                        </th>
-                    </tr>
+                <template slot="headerCell" slot-scope="props">
+                  <v-tooltip bottom>
+                    <span slot="activator">
+                      {{ props.header.text }}
+                    </span>
+                    <span>
+                      {{ props.header.text }}
+                    </span>
+                  </v-tooltip>
                 </template>
                 <template slot="items" slot-scope="props">
                     <tr>
@@ -155,7 +152,7 @@
         {
           text: 'Estado',
           align: 'center',
-          value: 'status'
+          value: 'status',
         },
         {
           text: 'Credito depositado',
@@ -164,13 +161,11 @@
           class: 'hidden-sm-and-down'
         },
         {
-          text: 'Vendido por',
-          value: 'soldBy',
-          align: 'center',
+          text: 'Vendido por', value: 'soldBy', align: 'center',
         },
         {
           text: 'Realizada a',
-          align: 'center',
+          align: 'right',
           value: 'createdAt'
         },
       ],

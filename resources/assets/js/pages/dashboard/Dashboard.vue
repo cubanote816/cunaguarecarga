@@ -118,6 +118,10 @@
         last30DaysSum: 0,
         mySellers: 0,
         salesStatus: [],
+        complete: '',
+        deny: '',
+        pending: '',
+        total: ''
       }
     },
 

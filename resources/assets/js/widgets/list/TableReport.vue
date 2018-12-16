@@ -1,7 +1,7 @@
 <template>
   <v-layout row wrap>
       <v-flex xs12>
-        <h3 class="flex text-xs-left primary--text">Reportes{{payTotal}}</h3>
+        <h3 class="flex text-xs-left primary--text">Reportes</h3>
       </v-flex>
       <v-flex xs12 sm4 md3 v-if="me.role !== 'seller'">
         <v-select

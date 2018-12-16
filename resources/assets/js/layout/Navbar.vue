@@ -91,7 +91,7 @@
       ],
       items: [
         { icon: 'mdi-view-dashboard', text: 'Dashboard', href: '/dashboard' },
-        { icon: 'mdi-shopping', text: 'Ordenes', href: '/order' },
+        { icon: 'mdi-shopping', text: 'Ordenar', href: '/order' },
         { icon: 'mdi-history', text: 'Historial', href: '/history' },
         { icon: 'mdi-chart-line-variant', text: 'Reportes', href: '/reports' },
         { icon: 'mdi-account-group', text: 'Vendedores', href: '/seller' },
